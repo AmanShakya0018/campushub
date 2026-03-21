@@ -1,5 +1,4 @@
 "use client"
-
 import SignInButton from "@/components/user/SignInButton"
 import UserAccountNav from "@/components/user/UserAccountNav"
 import { useSession } from "next-auth/react"
@@ -8,7 +7,7 @@ import React from "react"
 const Page = () => {
   const { data: session } = useSession()
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background">
+    <div>
       {session?.user ? (
         <UserAccountNav user={session.user} />
       ) : (
