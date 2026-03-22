@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import UserAccountNav from "../user/UserAccountNav"
 import SignInButton from "../user/SignInButton"
 import { Logo } from "../ui/logo"
+import { Themetoggle } from "../ui/ThemeToggle"
 
 const navigationItems = [{ id: 1, title: "Dashboard", href: "/dashboard" }]
 
@@ -43,6 +44,7 @@ const Navbar = () => {
           ) : (
             <SignInButton text={"Sign Up"} />
           )}
+          <Themetoggle />
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}

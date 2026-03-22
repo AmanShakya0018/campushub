@@ -16,7 +16,8 @@ const Provider = ({ children }: Props) => {
       {/* <QueryClientProvider client={queryClient}> */}
       <ThemeProvider
         attribute="class"
-        forcedTheme="dark"
+        defaultTheme="dark"
+        enableSystem
         disableTransitionOnChange
       >
         {children}

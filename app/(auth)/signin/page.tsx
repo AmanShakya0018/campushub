@@ -7,7 +7,6 @@ import { Logo } from "@/components/ui/logo"
 
 export default function SignInPage() {
   const [signinLoading, setSigninLoading] = useState(false)
-  const [createAccount, setCreateAccount] = useState(false)
 
   const handleSignIn = async () => {
     setSigninLoading(true)
@@ -19,63 +18,23 @@ export default function SignInPage() {
     }
   }
 
-  const handleCreateAccount = async () => {
-    setCreateAccount(true)
-    try {
-      await signIn("google", { callbackUrl: "/" })
-    } catch (error) {
-      console.error("Failed to sign in:", error)
-      setCreateAccount(false)
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="flex min-h-screen">
-        <div className="flex w-full items-center justify-center bg-black p-8">
+        <div className="flex w-full items-center justify-center bg-white p-8 dark:bg-black">
           <div className="w-full max-w-md space-y-8">
             <div className="text-center">
               <div className="mb-6 flex justify-center">
                 <Logo />
               </div>
-              <h2 className="bg-[radial-gradient(61.17%_178.53%_at_38.83%_-13.54%,#3B3B3B_0%,#888787_12.61%,#FFFFFF_50%,#888787_80%,#3B3B3B_100%)] bg-clip-text text-4xl font-bold tracking-tight text-transparent">
+              <h2 className="text-4xl font-bold tracking-tight text-primary">
                 Welcome to CampusHub
               </h2>
-              <p className="mt-3 text-sm text-neutral-400">Get Your Notes</p>
             </div>
 
             <div className="space-y-4">
               <button
-                className="group relative inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl border border-neutral-700 bg-linear-to-r from-neutral-800 to-neutral-900 px-8 text-sm font-medium whitespace-nowrap text-white shadow-lg transition-all duration-200 hover:from-neutral-700 hover:to-neutral-800 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-                onClick={handleCreateAccount}
-                disabled={createAccount}
-              >
-                <div className="absolute inset-0 bg-linear-to-r from-neutral-700 to-neutral-800 opacity-0 transition-opacity group-hover:opacity-100"></div>
-                <div className="relative z-10 flex items-center gap-2">
-                  {createAccount ? (
-                    <>
-                      <Spinner />
-                      Creating Account...
-                    </>
-                  ) : (
-                    <>Create Account</>
-                  )}
-                </div>
-              </button>
-
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-neutral-800"></span>
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-black px-4 font-medium text-neutral-500">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <button
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-800 bg-neutral-900/50 px-8 text-sm font-medium whitespace-nowrap text-white shadow-sm transition-all duration-200 hover:border-neutral-700 hover:bg-neutral-800/50 hover:shadow-md focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border-2 border-neutral-200 bg-neutral-50 px-8 text-sm font-medium whitespace-nowrap text-neutral-900 shadow-sm transition-all duration-200 hover:border-neutral-300 hover:bg-neutral-100 hover:shadow-md focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-900/50 dark:text-white dark:hover:border-neutral-700 dark:hover:bg-neutral-800/50 dark:focus-visible:ring-white/20"
                 onClick={handleSignIn}
                 disabled={signinLoading}
               >
@@ -110,17 +69,17 @@ export default function SignInPage() {
               </button>
             </div>
 
-            <p className="text-center text-sm leading-relaxed text-neutral-500">
+            <p className="text-center text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
               By signing up, you agree to our{" "}
               <Link
-                className="underline transition-colors hover:text-neutral-300"
+                className="underline transition-colors hover:text-neutral-700 dark:hover:text-neutral-300"
                 href="/termsofservice"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
-                className="underline transition-colors hover:text-neutral-300"
+                className="underline transition-colors hover:text-neutral-700 dark:hover:text-neutral-300"
                 href="/privacypolicy"
               >
                 Privacy Policy
