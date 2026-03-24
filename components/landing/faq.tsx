@@ -17,11 +17,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
   return (
     <motion.div
       className={cn(
-        "group rounded-lg border-[0.5px] border-neutral-800/50",
+        "group rounded-lg border border-neutral-200 dark:border-neutral-800",
         "transition-all duration-200 ease-in-out",
         isOpen
-          ? "bg-linear-to-br from-white/5 via-white/2 to-white/5"
-          : "hover:bg-white/2"
+          ? "bg-neutral-50 dark:bg-neutral-900"
+          : "hover:bg-neutral-50 dark:hover:bg-neutral-900"
       )}
     >
       <button
@@ -32,8 +32,8 @@ function FAQItem({ question, answer }: FAQItemProps) {
         <h3
           className={cn(
             "text-left text-base font-medium transition-colors duration-200",
-            "text-zinc-300",
-            isOpen && "text-white"
+            "text-neutral-900 dark:text-neutral-100",
+            isOpen && "text-primary"
           )}
         >
           {question}
@@ -50,7 +50,8 @@ function FAQItem({ question, answer }: FAQItemProps) {
           className={cn(
             "shrink-0 rounded-full p-0.5",
             "transition-colors duration-200",
-            isOpen ? "text-white" : "text-zinc-500"
+            "text-neutral-500 dark:text-neutral-400",
+            isOpen && "text-primary"
           )}
         >
           <ChevronDown className="h-4 w-4" />
@@ -97,7 +98,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
                   duration: 0.3,
                   ease: "easeOut",
                 }}
-                className="text-sm leading-relaxed text-neutral-400"
+                className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400"
               >
                 {answer}
               </motion.p>
@@ -144,7 +145,7 @@ function FAQ() {
   ]
 
   return (
-    <section className="w-full bg-linear-to-b from-transparent via-white/2 to-transparent py-24">
+    <section className="w-full py-24 dark:bg-transparent">
       <motion.div
         initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -153,10 +154,10 @@ function FAQ() {
         className="container mx-auto px-4"
       >
         <motion.div className="mx-auto mb-12 max-w-7xl text-center">
-          <h2 className="mx-auto mt-6 mb-2 max-w-3xl bg-linear-to-br from-neutral-100 via-neutral-100 via-50% to-neutral-100/30 bg-clip-text py-2 text-center text-4xl leading-[1.1] font-medium tracking-tighter text-balance text-transparent md:text-5xl">
+          <h2 className="test-primary mx-auto mt-6 mb-2 max-w-3xl py-2 text-center text-4xl leading-[1.1] font-medium tracking-tighter text-balance md:text-5xl">
             Let&apos;s Answer Your Questions
           </h2>
-          <p className="mb-8 bg-linear-to-br from-white/70 via-white/70 to-white/30 bg-clip-text text-center text-[0.8rem] text-balance text-transparent sm:text-[0.87rem] lg:text-[1rem]">
+          <p className="test-primary mb-8 text-[0.8rem] text-balance text-muted-foreground sm:text-[0.87rem] lg:text-[1rem]">
             Everything you need to know about our platform
           </p>
         </motion.div>
