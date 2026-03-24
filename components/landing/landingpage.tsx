@@ -2,6 +2,7 @@
 import HeroSection from "./herosection"
 import FeatureSection from "./featuresection"
 import Navbar from "./navbar"
+import FAQ from "./faq"
 
 const LandingPage = () => {
   return (
@@ -9,6 +10,7 @@ const LandingPage = () => {
       <Navbar />
       <HeroSection />
       <FeatureSection />
+      <FAQ />
     </div>
   )
 }
