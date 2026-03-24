@@ -9,6 +9,7 @@ import {
   FiSearch,
   FiStar,
 } from "react-icons/fi"
+import { cn } from "@/lib/utils"
 
 const features = [
   {
@@ -57,13 +58,27 @@ const FeatureSection = () => {
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
             Features
           </h2>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-400">
+            Everything you need to share and access study materials
+          </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <Card key={index}>
-              <CardHeader className="flex flex-row items-center gap-2">
-                <feature.icon className="mb-2 h-8 w-8 text-primary" />
-                <CardTitle className="text-primary">{feature.title}</CardTitle>
+            <Card
+              key={index}
+              className={cn(
+                "border-neutral-200 transition-all duration-300",
+                "hover:-translate-y-1 hover:shadow-lg",
+                "dark:border-neutral-800 dark:hover:border-neutral-700"
+              )}
+            >
+              <CardHeader>
+                <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <feature.icon className="h-6 w-6" />
+                </div>
+                <CardTitle className="text-xl text-primary">
+                  {feature.title}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-neutral-600 dark:text-neutral-400">
