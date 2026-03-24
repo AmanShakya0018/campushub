@@ -1,5 +1,6 @@
 "use client"
 import HeroSection from "./herosection"
+import FeatureSection from "./featuresection"
 import Navbar from "./navbar"
 
 const LandingPage = () => {
@@ -7,6 +8,7 @@ const LandingPage = () => {
     <div>
       <Navbar />
       <HeroSection />
+      <FeatureSection />
     </div>
   )
 }
