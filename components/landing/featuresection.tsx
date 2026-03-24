@@ -4,16 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const features = [
   {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Share Notes",
+    description: "Upload and share your study notes with classmates.",
   },
   {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Access Notes",
+    description: "Browse and download notes from other students.",
   },
   {
-    title: "Lorem ipsum",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    title: "Collaborate",
+    description: "Work together with peers to improve learning.",
   },
 ]
 
