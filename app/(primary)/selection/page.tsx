@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
 import { SelectionGuide } from "@/components/selection/SelectionGuide"
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage"
 
 const years = [
   { id: 1, label: "1st Year", description: "Freshman Year" },
@@ -22,14 +23,37 @@ const semesters = [
   { id: "even", label: "Even Semester", sub: "Sem 2, 4, 6, 8" },
 ]
 
+interface RecentSelection {
+  year: number
+  sem: string
+  timestamp: number
+}
+
 export default function SelectionPage() {
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
   const [selectedSem, setSelectedSem] = useState<string | null>(null)
+  const [recent, setRecent] = useLocalStorage<RecentSelection[]>("campushub_recent_selections", [])
   const router = useRouter()
 
-  const handleContinue = () => {
-    if (selectedYear && selectedSem) {
-      router.push(`/selection/${selectedYear}/${selectedSem}`)
+  const handleContinue = (year?: number, sem?: string) => {
+    const finalYear = year || selectedYear
+    const finalSem = sem || selectedSem
+
+    if (finalYear && finalSem) {
+      // Save to recent
+      const newRecent: RecentSelection = {
+        year: finalYear,
+        sem: finalSem,
+        timestamp: Date.now()
+      }
+      
+      const updatedRecent = [
+        newRecent,
+        ...recent.filter(r => !(r.year === finalYear && r.sem === finalSem))
+      ].slice(0, 3)
+
+      setRecent(updatedRecent)
+      router.push(`/selection/${finalYear}/${finalSem}`)
     }
   }
 
@@ -71,6 +95,54 @@ export default function SelectionPage() {
             Configure your curriculum parameters to access specific study materials.
           </motion.p>
         </div>
+
+        {/* Recent Selections */}
+        {recent.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-16 rounded-none border-2 border-dashed border-neutral-200 p-8 dark:border-neutral-800"
+          >
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">Recently Accesssed</h3>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-neutral-900"
+                onClick={() => {
+                  localStorage.removeItem("campushub_recent_selections")
+                  setRecent([])
+                }}
+              >
+                Clear History
+              </Button>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {recent.map((r, i) => (
+                <Card 
+                  key={i} 
+                  className="cursor-pointer border-neutral-100 bg-white transition-all hover:border-neutral-900 dark:bg-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100"
+                  onClick={() => handleContinue(r.year, r.sem)}
+                >
+                  <CardContent className="flex items-center justify-between p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center bg-neutral-100 text-[10px] font-bold dark:bg-neutral-800">
+                        {r.year}
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-tight">{r.sem.toUpperCase()} SEMESTER</p>
+                        <p className="text-[8px] font-medium text-neutral-400 uppercase tracking-widest">
+                          Last Entry: {new Date(r.timestamp).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronRight className="h-3 w-3 text-neutral-300" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         <div className="space-y-16">
           {/* Year Selection */}
