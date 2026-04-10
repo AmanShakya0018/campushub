@@ -46,9 +46,9 @@ export function DashboardHeader() {
           Upload
         </Button>
         <Themetoggle />
-        <Button variant="ghost" size="icon" className="relative text-neutral-500">
+        <Button variant="ghost" size="icon" className="relative text-neutral-500 hover:text-black dark:hover:text-white">
           <Bell className="h-5 w-5" />
-          <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-neutral-900" />
+          <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-neutral-900 ring-2 ring-neutral-50 dark:bg-neutral-100 dark:ring-neutral-950" />
         </Button>
       </div>
     </header>

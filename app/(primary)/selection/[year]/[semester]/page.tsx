@@ -2,13 +2,13 @@
 
 import React from "react"
 import { useRouter, useParams } from "next/navigation"
-import { Search } from "lucide-react"
+import { Search, Book } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 
 import { SelectionBreadcrumbs } from "@/components/selection/SelectionBreadcrumbs"
-import { SubjectGrid } from "@/components/selection/SubjectGrid"
+import { SubjectCard } from "@/components/selection/SubjectCard"
 import { subjectsData } from "@/lib/constants/subjects"
 
 export default function SubjectSelectionPage() {
@@ -18,7 +18,7 @@ export default function SubjectSelectionPage() {
   const semester = params.semester as string
 
   const subjects = subjectsData[year]?.[semester] || []
-  const [search, setSearch] = React.useState("")
+  const [searchQuery, setSearchQuery] = React.useState("")
   const [bookmarks, setBookmarks] = React.useState<string[]>([])
 
   // Load bookmarks on mount
@@ -44,8 +44,8 @@ export default function SubjectSelectionPage() {
   }
 
   const filteredSubjects = subjects.filter(s => 
-    s.name.toLowerCase().includes(search.toLowerCase()) || 
-    s.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
+    s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    s.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
   )
 
   const handleSubjectClick = (subjectId: string) => {

@@ -29,7 +29,7 @@ export function SelectionBreadcrumbs({ year, semester, className }: BreadcrumbsP
     <nav className={cn("flex items-center space-x-2 text-sm font-medium text-neutral-500 dark:text-neutral-400", className)}>
       <Link 
         href="/" 
-        className="flex items-center hover:text-indigo-600 transition-colors"
+        className="flex items-center hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
       >
         <Home className="h-4 w-4" />
       </Link>
@@ -38,7 +38,7 @@ export function SelectionBreadcrumbs({ year, semester, className }: BreadcrumbsP
       
       <Link 
         href="/selection" 
-        className="hover:text-indigo-600 transition-colors"
+        className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors uppercase text-[10px] font-bold tracking-widest"
       >
         Selection
       </Link>
@@ -48,9 +48,9 @@ export function SelectionBreadcrumbs({ year, semester, className }: BreadcrumbsP
           <ChevronRight className="h-4 w-4 shrink-0" />
           <Link 
             href={`/selection`} 
-            className="hover:text-indigo-600 transition-colors"
+            className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors uppercase text-[10px] font-bold tracking-widest"
           >
-            {getYearLabel(year)}
+            {getYearLabel(year).toUpperCase()}
           </Link>
         </>
       )}
@@ -58,8 +58,8 @@ export function SelectionBreadcrumbs({ year, semester, className }: BreadcrumbsP
       {semester && (
         <>
           <ChevronRight className="h-4 w-4 shrink-0" />
-          <span className="text-neutral-900 dark:text-neutral-100">
-            {getSemLabel(semester)}
+          <span className="text-neutral-900 dark:text-neutral-100 uppercase text-[10px] font-bold tracking-widest">
+            {getSemLabel(semester).toUpperCase()}
           </span>
         </>
       )}

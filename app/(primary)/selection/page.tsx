@@ -188,7 +188,6 @@ export default function SelectionPage() {
             </Button>
           </div>
         </div>
-      </div>
     </div>
   )
 }

@@ -133,11 +133,11 @@ export function DashboardSidebar() {
           <Button 
             variant="ghost" 
             size="sm" 
-            className="justify-start gap-3 w-full text-neutral-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20" 
+            className="justify-start gap-3 w-full text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800" 
             onClick={() => signOut()}
           >
             <LogOut className="h-4 w-4" />
-            <span className="group-data-[collapsible=icon]:hidden text-xs">Sign Out</span>
+            <span className="group-data-[collapsible=icon]:hidden text-xs uppercase tracking-widest font-bold">Sign Out</span>
           </Button>
           <Button variant="ghost" size="sm" className="justify-start gap-3 w-full text-neutral-500">
             <Settings className="h-4 w-4" />
