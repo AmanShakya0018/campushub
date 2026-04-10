@@ -3,35 +3,22 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, GraduationCap, BookOpen, Bookmark, ChevronLeft, LogOut, Settings } from "lucide-react"
+import { LayoutDashboard, GraduationCap, BookOpen, Bookmark, LogOut, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Themetoggle } from "@/components/ui/ThemeToggle"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import { UserAvatar } from "@/components/user/UserAvatar"
 import { useSession, signOut } from "next-auth/react"
-
-interface SidebarItemProps {
-  href: string
-  icon: any
-  label: string
-  isActive?: boolean
-}
-
-function SidebarItem({ href, icon: Icon, label, isActive }: SidebarItemProps) {
-  return (
-    <Link href={href}>
-      <div className={cn(
-        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all hover:bg-neutral-100 dark:hover:bg-neutral-800",
-        isActive ? "bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400" : "text-neutral-500 dark:text-neutral-400"
-      )}>
-        <Icon className="h-4 w-4" />
-        {label}
-      </div>
-    </Link>
-  )
-}
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarGroup,
+  SidebarGroupLabel,
+} from "@/components/ui/sidebar"
 
 export function DashboardSidebar() {
   const pathname = usePathname()
@@ -50,69 +37,113 @@ export function DashboardSidebar() {
   }, [])
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="flex h-full flex-col">
-        <div className="flex h-16 items-center px-6">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl uppercase tracking-wider text-indigo-600">
-            <LayoutDashboard className="h-6 w-6" />
-            <span>CampusHub</span>
-          </Link>
-        </div>
-
-        <ScrollArea className="flex-1 px-4">
-          <div className="space-y-6 py-4">
-            <div className="space-y-1">
-              <h4 className="px-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">Main Menu</h4>
-              <SidebarItem href="/dashboard" icon={LayoutDashboard} label="Overview" isActive={pathname === "/dashboard"} />
-              <SidebarItem href="/selection" icon={GraduationCap} label="Year Selection" isActive={pathname.startsWith("/selection")} />
-            </div>
-
-            <Separator className="mx-3 opacity-50" />
-
-            <div className="space-y-1">
-              <h4 className="px-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">Library</h4>
-              <SidebarItem href="/dashboard?view=starred" icon={Bookmark} label="Starred Notes" />
-              <SidebarItem href="/dashboard?view=recents" icon={BookOpen} label="Recent History" />
-            </div>
-
-            {bookmarks.length > 0 && (
-              <div className="space-y-1">
-                <h4 className="px-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">Bookmarked</h4>
-                {bookmarks.slice(0, 5).map((id) => (
-                  <Link key={id} href={`/dashboard?subject=${id}`}>
-                    <div className="flex items-center gap-3 rounded-lg px-3 py-2 text-xs text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
-                      <div className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-                      <span className="truncate uppercase">{id}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+    <Sidebar collapsible="icon" className="border-r border-neutral-200 dark:border-neutral-800">
+      <SidebarHeader className="h-16 flex items-center px-4">
+        <Link href="/" className="flex items-center gap-3 font-bold text-xl uppercase tracking-wider text-indigo-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
+            <LayoutDashboard className="h-5 w-5" />
           </div>
-        </ScrollArea>
+          <span className="group-data-[collapsible=icon]:hidden">CampusHub</span>
+        </Link>
+      </SidebarHeader>
 
-        <div className="mt-auto border-t border-neutral-200 p-4 dark:border-neutral-800">
-          {session?.user && (
-            <div className="flex items-center gap-3 px-2 py-3">
-              <UserAvatar user={session.user} className="h-9 w-9" />
-              <div className="flex-1 overflow-hidden">
-                <p className="truncate text-sm font-semibold">{session.user.name}</p>
-                <p className="truncate text-xs text-neutral-500">{session.user.email}</p>
-              </div>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton 
+                asChild 
+                isActive={pathname === "/dashboard"} 
+                tooltip="Overview"
+              >
+                <Link href="/dashboard">
+                  <LayoutDashboard />
+                  <span>Overview</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton 
+                asChild 
+                isActive={pathname.startsWith("/selection")} 
+                tooltip="Year Selection"
+              >
+                <Link href="/selection">
+                  <GraduationCap />
+                  <span>Year Selection</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Library</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Starred Notes">
+                <Link href="/dashboard?view=starred">
+                  <Bookmark />
+                  <span>Starred Notes</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Recent History">
+                <Link href="/dashboard?view=recents">
+                  <BookOpen />
+                  <span>Recent History</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {bookmarks.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Bookmarked</SidebarGroupLabel>
+            <SidebarMenu>
+              {bookmarks.slice(0, 5).map((id) => (
+                <SidebarMenuItem key={id}>
+                  <SidebarMenuButton asChild tooltip={id.toUpperCase()}>
+                    <Link href={`/dashboard?subject=${id}`}>
+                      <div className="h-2 w-2 rounded-full bg-indigo-500" />
+                      <span className="uppercase">{id}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+        )}
+      </SidebarContent>
+
+      <SidebarFooter className="border-t border-neutral-200 p-2 dark:border-neutral-800">
+        {session?.user && (
+          <div className="flex items-center gap-3 px-2 py-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
+            <UserAvatar user={session.user} className="h-8 w-8" />
+            <div className="flex-1 overflow-hidden group-data-[collapsible=icon]:hidden">
+              <p className="truncate text-xs font-semibold">{session.user.name}</p>
+              <p className="truncate text-[10px] text-neutral-500">{session.user.email}</p>
             </div>
-          )}
-          <div className="grid grid-cols-2 gap-2">
-            <Button variant="ghost" size="sm" className="justify-start gap-2 text-neutral-500" onClick={() => signOut()}>
-              <LogOut className="h-4 w-4" />
-              Exit
-            </Button>
-            <Button variant="ghost" size="sm" className="justify-start gap-2 text-neutral-500">
-              <Settings className="h-4 w-4" />
-              Config
-            </Button>
           </div>
+        )}
+        <div className="flex flex-col gap-1">
+          <SidebarMenuButton 
+            className="text-neutral-500 hover:text-red-500" 
+            onClick={() => signOut()}
+            tooltip="Sign Out"
+          >
+            <LogOut />
+            <span>Sign Out</span>
+          </SidebarMenuButton>
+          <SidebarMenuButton className="text-neutral-500" tooltip="Settings">
+            <Settings />
+            <span>Settings</span>
+          </SidebarMenuButton>
         </div>
-      </div>
-    </aside>
+      </SidebarFooter>
+    </Sidebar>
   )
 }

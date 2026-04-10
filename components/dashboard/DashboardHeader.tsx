@@ -8,6 +8,8 @@ import { SelectionBreadcrumbs } from "../selection/SelectionBreadcrumbs"
 import { useSearchParams } from "next/navigation"
 import { Themetoggle } from "@/components/ui/ThemeToggle"
 
+import { SidebarTrigger } from "@/components/ui/sidebar"
+
 export function DashboardHeader() {
   const searchParams = useSearchParams()
   const subject = searchParams.get("subject")
@@ -15,11 +17,9 @@ export function DashboardHeader() {
   const sem = searchParams.get("sem")
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-neutral-200 bg-white/80 px-8 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/80">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-neutral-200 bg-white/80 px-4 md:px-8 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/80">
       <div className="flex flex-1 items-center gap-4">
-        <Button variant="ghost" size="icon" className="lg:hidden text-neutral-500">
-          <Menu className="h-5 w-5" />
-        </Button>
+        <SidebarTrigger className="text-neutral-500" />
         
         <div className="hidden md:block">
           <SelectionBreadcrumbs 
