@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UserAvatar from "./UserAvatar";
+import { UserAvatar } from "./UserAvatar";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
 
