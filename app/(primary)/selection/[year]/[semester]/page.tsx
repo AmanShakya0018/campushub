@@ -3,9 +3,11 @@
 import React from "react"
 import { useRouter, useParams } from "next/navigation"
 import { Search, Book } from "lucide-react"
+import { motion, AnimatePresence } from "motion/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 import { SelectionBreadcrumbs } from "@/components/selection/SelectionBreadcrumbs"
 import { SubjectCard } from "@/components/selection/SubjectCard"
@@ -152,10 +154,11 @@ export default function SubjectSelectionPage() {
 
         {filteredSubjects.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredSubjects.map((subject) => (
+            {filteredSubjects.map((subject, index) => (
               <SubjectCard
                 key={subject.id}
                 subject={subject}
+                index={index}
                 isBookmarked={bookmarks.includes(subject.id)}
                 onToggleBookmark={toggleBookmark}
                 onClick={handleSubjectClick}

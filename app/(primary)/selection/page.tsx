@@ -249,7 +249,7 @@ export default function SelectionPage() {
           <div className="mt-12 flex justify-center">
             <Button
               disabled={!selectedYear || !selectedSem}
-              onClick={handleContinue}
+              onClick={() => handleContinue()}
               className={cn(
                 "h-14 w-full max-w-xs transition-all duration-300 text-xs font-bold uppercase tracking-[0.2em] rounded-none border-2",
                 selectedYear && selectedSem 
