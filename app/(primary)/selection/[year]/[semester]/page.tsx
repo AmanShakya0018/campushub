@@ -17,8 +17,10 @@ export default function SubjectSelectionPage() {
   const year = params.year as string
   const semester = params.semester as string
 
-  const subjects = subjectsData[year]?.[semester] || []
+  const subjects = React.useMemo(() => subjectsData[year]?.[semester] || [], [year, semester])
   const [searchQuery, setSearchQuery] = React.useState("")
+  const [typeFilter, setTypeFilter] = React.useState<string>("All")
+  const [sortBy, setSortBy] = React.useState<"none" | "difficulty" | "credits">("none")
   const [bookmarks, setBookmarks] = React.useState<string[]>([])
 
   // Load bookmarks on mount
@@ -43,10 +45,22 @@ export default function SubjectSelectionPage() {
     localStorage.setItem("campushub_bookmarks", JSON.stringify(newBookmarks))
   }
 
-  const filteredSubjects = subjects.filter(s => 
-    s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    s.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
-  )
+  const filteredSubjects = React.useMemo(() => {
+    let result = subjects.filter(s => {
+      const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          s.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+      const matchesType = typeFilter === "All" || s.type === typeFilter
+      return matchesSearch && matchesType
+    })
+
+    if (sortBy === "difficulty") {
+      result = [...result].sort((a, b) => b.difficulty - a.difficulty)
+    } else if (sortBy === "credits") {
+      result = [...result].sort((a, b) => b.credits - a.credits)
+    }
+
+    return result
+  }, [subjects, searchQuery, typeFilter, sortBy])
 
   const handleSubjectClick = (subjectId: string) => {
     router.push(`/dashboard?subject=${subjectId}&year=${year}&sem=${semester}`)
@@ -78,6 +92,61 @@ export default function SubjectSelectionPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+          </div>
+        </div>
+
+        {/* Filters & Sorting */}
+        <div className="mb-12 flex flex-wrap items-center justify-between gap-6 border-y border-neutral-100 py-6 dark:border-neutral-800">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="mr-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">Filter By</span>
+            {["All", "Core", "Lab", "Elective"].map((type) => (
+              <Button
+                key={type}
+                variant="ghost"
+                size="sm"
+                onClick={() => setTypeFilter(type)}
+                className={cn(
+                  "h-8 px-4 text-[10px] font-bold uppercase tracking-widest transition-all",
+                  typeFilter === type 
+                    ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-black" 
+                    : "text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                )}
+              >
+                {type}
+              </Button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="mr-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">Sort By</span>
+            <div className="flex gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSortBy(sortBy === "difficulty" ? "none" : "difficulty")}
+                className={cn(
+                  "h-8 border-2 text-[10px] font-bold uppercase tracking-widest transition-all px-4",
+                  sortBy === "difficulty" 
+                    ? "border-neutral-900 bg-neutral-900 text-white dark:border-neutral-100 dark:bg-neutral-100 dark:text-black" 
+                    : "border-neutral-200 text-neutral-500 dark:border-neutral-800"
+                )}
+              >
+                Difficulty
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSortBy(sortBy === "credits" ? "none" : "credits")}
+                className={cn(
+                  "h-8 border-2 text-[10px] font-bold uppercase tracking-widest transition-all px-4",
+                  sortBy === "credits" 
+                    ? "border-neutral-900 bg-neutral-900 text-white dark:border-neutral-100 dark:bg-neutral-100 dark:text-black" 
+                    : "border-neutral-200 text-neutral-500 dark:border-neutral-800"
+                )}
+              >
+                Credits
+              </Button>
+            </div>
           </div>
         </div>
 
