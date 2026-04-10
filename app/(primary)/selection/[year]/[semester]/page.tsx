@@ -52,47 +52,69 @@ export default function SubjectSelectionPage() {
     router.push(`/dashboard?subject=${subjectId}&year=${year}&sem=${semester}`)
   }
 
-  const getFullYearLabel = (y: string) => {
-    const labels: Record<string, string> = { "1": "1st Year", "2": "2nd Year", "3": "3rd Year", "4": "4th Year" }
-    return labels[y] || `${y}th Year`
-  }
-
   return (
-    <div className="min-h-screen bg-linear-to-b from-neutral-50 to-neutral-100 px-4 py-20 dark:from-neutral-950 dark:to-neutral-900">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <SelectionBreadcrumbs year={year} semester={semester} />
+    <div className="min-h-screen bg-neutral-50 px-4 py-8 dark:bg-neutral-950">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-400">
+              <Book className="h-4 w-4" />
+              <span>{year} Year / {semester} Sem</span>
+            </div>
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 uppercase">
+              Available Subjects
+            </h1>
+            <p className="mt-2 text-neutral-500 dark:text-neutral-400">
+              Found <span className="font-bold text-neutral-900 dark:text-neutral-50">{filteredSubjects.length}</span> curated subject modules for your selected academic period.
+            </p>
+          </div>
 
-          <Badge variant="secondary" className="w-fit px-3 py-1 text-sm font-medium">
-            CSE • {getFullYearLabel(year)} • {semester.charAt(0).toUpperCase() + semester.slice(1)} Sem
-          </Badge>
-        </div>
-
-        <div className="mb-12">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl dark:text-neutral-50 text-center">
-            Choose a Subject
-          </h1>
-          <p className="mt-3 text-center text-neutral-600 dark:text-neutral-400">
-            Select a subject to view modules and study materials.
-          </p>
-
-          <div className="mx-auto mt-8 max-w-md relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
-            <Input 
-              placeholder="Search subjects or topics..." 
-              className="pl-10 h-12 bg-white dark:bg-neutral-800 transition-all focus:ring-2 focus:ring-indigo-500/20"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+          <div className="relative w-full max-w-md">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+            <Input
+              type="text"
+              placeholder="Search by subject name or tags..."
+              className="h-12 w-full pl-10 border-2 border-neutral-200 bg-white transition-all focus:border-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:focus:border-neutral-100"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
 
-        <SubjectGrid 
-          subjects={filteredSubjects}
-          bookmarks={bookmarks}
-          onToggleBookmark={toggleBookmark}
-          onSubjectClick={handleSubjectClick}
-        />
+        {filteredSubjects.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredSubjects.map((subject) => (
+              <SubjectCard
+                key={subject.id}
+                subject={subject}
+                isBookmarked={bookmarks.includes(subject.id)}
+                onToggleBookmark={toggleBookmark}
+                onClick={handleSubjectClick}
+              />
+            ))}
+          </div>
+        ) : (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center py-32 text-center"
+          >
+            <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-neutral-100 text-neutral-300 dark:bg-neutral-800">
+              <Search className="h-10 w-10" />
+            </div>
+            <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-50">NO MATCHES FOUND</h3>
+            <p className="mt-2 text-neutral-500 dark:text-neutral-400">
+              We couldn't find any subjects matching "{searchQuery}". Try a different term.
+            </p>
+            <Button
+              variant="outline"
+              className="mt-6 border-2 border-neutral-900 text-xs font-bold uppercase tracking-widest dark:border-neutral-100"
+              onClick={() => setSearchQuery("")}
+            >
+              Clear Search
+            </Button>
+          </motion.div>
+        )}
       </div>
     </div>
   )

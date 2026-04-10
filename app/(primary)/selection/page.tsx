@@ -34,21 +34,20 @@ export default function SelectionPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-neutral-50 to-neutral-100 px-4 py-20 dark:from-neutral-950 dark:to-neutral-900">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-12">
-          <div className="flex justify-center mb-8">
-            <div className="flex items-center gap-4 text-sm font-medium">
-              <div className={cn("flex items-center gap-2", !selectedYear ? "text-indigo-600" : "text-neutral-500")}>
-                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full text-[10px]", !selectedYear ? "bg-indigo-600 text-white" : "bg-neutral-200")}>1</span>
+          <div className="flex justify-center mb-12">
+            <div className="flex items-center gap-4 text-xs font-medium uppercase tracking-widest text-neutral-400">
+              <div className={cn("flex items-center gap-2", !selectedYear ? "text-neutral-900 dark:text-neutral-100" : "")}>
+                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full border border-neutral-200", !selectedYear ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black border-transparent" : "bg-neutral-50 dark:bg-neutral-800")}>1</span>
                 Year
               </div>
-              <div className="h-px w-8 bg-neutral-200" />
-              <div className={cn("flex items-center gap-2", selectedYear && !selectedSem ? "text-indigo-600" : "text-neutral-500")}>
-                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full text-[10px]", selectedYear && !selectedSem ? "bg-indigo-600 text-white" : "bg-neutral-200")}>2</span>
+              <div className="h-px w-8 bg-neutral-200 dark:bg-neutral-800" />
+              <div className={cn("flex items-center gap-2", selectedYear && !selectedSem ? "text-neutral-900 dark:text-neutral-100" : "")}>
+                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full border border-neutral-200", selectedYear && !selectedSem ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black border-transparent" : "bg-neutral-50 dark:bg-neutral-800")}>2</span>
                 Semester
               </div>
-              <div className="h-px w-8 bg-neutral-200" />
-              <div className="flex items-center gap-2 text-neutral-400">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-200 text-[10px]">3</span>
+              <div className="h-px w-8 bg-neutral-200 dark:bg-neutral-800" />
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 dark:bg-neutral-800 text-neutral-300">3</span>
                 Subject
               </div>
             </div>
@@ -57,32 +56,32 @@ export default function SelectionPage() {
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50"
+            className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50 text-center uppercase"
           >
-            Select Your Academic Level
+            Academic Selection
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mt-4 text-lg text-neutral-600 dark:text-neutral-400"
+            className="mt-4 text-lg text-neutral-500 dark:text-neutral-400 text-center"
           >
-            Choose your year and semester to access the right study materials.
+            Configure your curriculum parameters to access specific study materials.
           </motion.p>
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-16">
           {/* Year Selection */}
           <section>
-            <div className="mb-6 flex items-center gap-2">
-              <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-              <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">Select Year</h2>
+            <div className="mb-6 flex items-center justify-center gap-2 opacity-50">
+              <GraduationCap className="h-4 w-4" />
+              <h2 className="text-xs font-bold uppercase tracking-[0.2em]">Select Period</h2>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {years.map((year) => (
                 <motion.div
                   key={year.id}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Card
@@ -90,23 +89,23 @@ export default function SelectionPage() {
                     className={cn(
                       "group relative cursor-pointer overflow-hidden border-2 transition-all duration-300",
                       selectedYear === year.id
-                        ? "border-indigo-600 bg-indigo-50/50 ring-4 ring-indigo-500/10 dark:border-indigo-500 dark:bg-indigo-500/10"
+                        ? "border-neutral-900 bg-neutral-50 ring-4 ring-neutral-900/5 dark:border-neutral-100 dark:bg-neutral-900 dark:ring-neutral-100/5"
                         : "border-transparent bg-white hover:border-neutral-200 dark:bg-neutral-800 dark:hover:border-neutral-700"
                     )}
                   >
-                    <CardContent className="flex flex-col items-center p-6 text-center">
+                    <CardContent className="flex flex-col items-center p-8 text-center">
                       <div className={cn(
                         "mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors",
-                        selectedYear === year.id ? "bg-indigo-600 text-white" : "bg-neutral-100 text-neutral-500 dark:bg-neutral-700"
+                        selectedYear === year.id ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-black" : "bg-neutral-100 text-neutral-400 dark:bg-neutral-700"
                       )}>
-                        <Layers className="h-6 w-6" />
+                        <Layers className="h-5 w-5" />
                       </div>
-                      <h3 className="text-lg font-bold">{year.label}</h3>
-                      <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{year.description}</p>
+                      <h3 className="text-lg font-bold tracking-tight">{year.label.toUpperCase()}</h3>
+                      <p className="mt-1 text-[10px] items-center font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-500">{year.description}</p>
                       {selectedYear === year.id && (
                         <motion.div 
                           layoutId="activeYear"
-                          className="absolute top-2 right-2 h-6 w-6 rounded-full bg-indigo-600 p-1 text-white"
+                          className="absolute top-2 right-2 h-5 w-5 rounded-full bg-neutral-900 p-1 text-white dark:bg-neutral-100 dark:text-black"
                         >
                           <Check className="h-full w-full" />
                         </motion.div>
@@ -122,44 +121,44 @@ export default function SelectionPage() {
           <AnimatePresence>
             {selectedYear && (
               <motion.section
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="mb-6 flex items-center gap-2">
-                  <BookOpen className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-                  <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">Select Semester</h2>
+                <div className="mb-6 flex items-center justify-center gap-2 opacity-50">
+                  <BookOpen className="h-4 w-4" />
+                  <h2 className="text-xs font-bold uppercase tracking-[0.2em]">Select Semester</h2>
                 </div>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
                   {semesters.map((sem) => (
                     <motion.div
                       key={sem.id}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ y: -2 }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <Card
                         onClick={() => setSelectedSem(sem.id)}
                         className={cn(
-                          "group relative cursor-pointer overflow-hidden border-2 p-1 transition-all duration-300",
+                          "group relative cursor-pointer overflow-hidden border-2 transition-all duration-300",
                           selectedSem === sem.id
-                            ? "border-indigo-600 bg-indigo-50/50 ring-4 ring-indigo-500/10 dark:border-indigo-500 dark:bg-indigo-500/10"
+                            ? "border-neutral-900 bg-neutral-50 ring-4 ring-neutral-900/5 dark:border-neutral-100 dark:bg-neutral-900 dark:ring-neutral-100/5"
                             : "border-transparent bg-white hover:border-neutral-200 dark:bg-neutral-800 dark:hover:border-neutral-700"
                         )}
                       >
-                        <CardContent className="flex items-center gap-4 p-6">
+                        <CardContent className="flex items-center gap-6 p-8">
                           <div className={cn(
                             "flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl transition-colors",
-                            selectedSem === sem.id ? "bg-indigo-600 text-white" : "bg-neutral-100 text-neutral-500 dark:bg-neutral-700"
+                            selectedSem === sem.id ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-black" : "bg-neutral-100 text-neutral-400 dark:bg-neutral-700"
                           )}>
-                            <Calendar className="h-8 w-8" />
+                            <Calendar className="h-7 w-7" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-bold">{sem.label}</h3>
-                            <p className="text-sm text-neutral-500 dark:text-neutral-400">{sem.sub}</p>
+                            <h3 className="text-xl font-bold tracking-tight">{sem.label.toUpperCase()}</h3>
+                            <p className="text-xs font-medium text-neutral-500 uppercase tracking-wide">{sem.sub}</p>
                           </div>
                           {selectedSem === sem.id && (
-                            <div className="h-6 w-6 rounded-full bg-indigo-600 p-1 text-white">
+                            <div className="h-6 w-6 rounded-full bg-neutral-900 p-1 text-white dark:bg-neutral-100 dark:text-black">
                               <Check className="h-full w-full" />
                             </div>
                           )}
@@ -177,16 +176,15 @@ export default function SelectionPage() {
             <Button
               disabled={!selectedYear || !selectedSem}
               onClick={handleContinue}
-              size="lg"
               className={cn(
-                "h-14 w-full max-w-xs transition-all duration-300 sm:text-lg",
+                "h-14 w-full max-w-xs transition-all duration-300 text-xs font-bold uppercase tracking-[0.2em] rounded-none border-2",
                 selectedYear && selectedSem 
-                  ? "bg-indigo-600 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/20" 
-                  : "bg-neutral-200 text-neutral-500 dark:bg-neutral-800"
+                  ? "bg-neutral-900 text-white hover:bg-black border-black dark:bg-white dark:text-black dark:hover:bg-neutral-200 dark:border-white" 
+                  : "bg-neutral-50 text-neutral-300 border-neutral-100 dark:bg-neutral-900 dark:text-neutral-700 dark:border-neutral-800"
               )}
             >
               Continue to Subjects
-              <ChevronRight className="ml-2 h-5 w-5" />
+              <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
