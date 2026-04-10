@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const HeroSection = () => {
   return (
@@ -17,12 +18,11 @@ const HeroSection = () => {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
+            <Link href="/dashboard">
             <Button variant="default" className="h-12 px-8 rounded-none bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-neutral-200 text-xs font-bold uppercase tracking-[0.2em] transition-all">
-              Initialize Access
+              Dashboard
             </Button>
-            <Button variant="outline" className="h-12 px-8 rounded-none border-2 border-neutral-200 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:bg-neutral-50 dark:border-neutral-800 dark:hover:bg-neutral-900">
-              Browse Modules
-            </Button>
+            </Link>
           </div>
         </div>
       </div>
