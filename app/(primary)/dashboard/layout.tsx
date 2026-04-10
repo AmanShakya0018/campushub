@@ -1,5 +1,6 @@
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar"
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 export default function DashboardLayout({
   children,
@@ -7,20 +8,17 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex min-h-screen bg-neutral-50 dark:bg-neutral-950">
-      {/* Sidebar - Hidden on mobile, fixed on desktop */}
-      <DashboardSidebar />
-
-      {/* Main Content Area */}
-      <div className="flex flex-1 flex-col pl-64">
-        {/* Header - Sticky at top */}
-        <DashboardHeader />
-
-        {/* Content - Scrollable */}
-        <main className="flex-1 overflow-y-auto p-8">
-          {children}
-        </main>
+    <SidebarProvider>
+      <div className="flex min-h-svh w-full bg-neutral-50 dark:bg-neutral-950">
+        <DashboardSidebar />
+        
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <DashboardHeader />
+          <main className="flex-1 overflow-y-auto p-4 md:p-8">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   )
 }
