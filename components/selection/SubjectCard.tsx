@@ -39,20 +39,25 @@ export function SubjectCard({ subject, index, isBookmarked, onToggleBookmark, on
             )}>
               <Icon className="h-6 w-6" />
             </div>
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className={cn(
-                "h-8 w-8 rounded-full transition-all duration-300",
-                isBookmarked ? "text-indigo-600 opacity-100" : "opacity-0 group-hover:opacity-100 text-neutral-400"
-              )}
-              onClick={(e) => {
-                e.stopPropagation()
-                onToggleBookmark(subject.id)
-              }}
-            >
-              <Bookmark className={cn("h-4 w-4", isBookmarked && "fill-current")} />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="text-[9px] px-1.5 py-0 h-5 font-bold uppercase tracking-tight bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">
+                {subject.type}
+              </Badge>
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className={cn(
+                  "h-8 w-8 rounded-full transition-all duration-300",
+                  isBookmarked ? "text-indigo-600 opacity-100" : "opacity-0 group-hover:opacity-100 text-neutral-400"
+                )}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onToggleBookmark(subject.id)
+                }}
+              >
+                <Bookmark className={cn("h-4 w-4", isBookmarked && "fill-current")} />
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6">
