@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import SignInButton from "@/components/user/SignInButton"
 
+import { SubjectFeed } from "@/components/dashboard/SubjectFeed"
+import { mockNotes } from "@/lib/constants/mockNotes"
+
 export default function DashboardPage() {
   const { data: session } = useSession()
   const searchParams = useSearchParams()
@@ -28,6 +31,7 @@ export default function DashboardPage() {
   }
 
   if (subjectId) {
+    const notes = mockNotes[subjectId] || []
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
@@ -40,15 +44,7 @@ export default function DashboardPage() {
           </Button>
         </div>
         
-        <div className="grid gap-6">
-          <Card className="bg-indigo-50/30 border-dashed border-indigo-200 dark:bg-indigo-950/10 dark:border-indigo-900">
-            <CardContent className="h-64 flex flex-col items-center justify-center text-center">
-              <BookOpen className="h-10 w-10 text-indigo-400 mb-3" />
-              <h3 className="text-lg font-semibold">Subject Feed Coming Soon</h3>
-              <p className="text-sm text-neutral-500 max-w-sm">We're integrating the note repository for {subjectId}. Stay tuned!</p>
-            </CardContent>
-          </Card>
-        </div>
+        <SubjectFeed subjectId={subjectId} notes={notes} />
       </div>
     )
   }
