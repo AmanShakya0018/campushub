@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation"
 import { LayoutDashboard, GraduationCap, BookOpen, Bookmark, ChevronLeft, LogOut, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Themetoggle } from "@/components/ui/ThemeToggle"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
-import { UserAvatar } from "../user/UserAvatar"
+import { UserAvatar } from "@/components/user/UserAvatar"
 import { useSession, signOut } from "next-auth/react"
 
 interface SidebarItemProps {

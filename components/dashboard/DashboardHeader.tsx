@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { SelectionBreadcrumbs } from "../selection/SelectionBreadcrumbs"
 import { useSearchParams } from "next/navigation"
-import ThemeToggle from "@/components/ui/ThemeToggle"
+import { Themetoggle } from "@/components/ui/ThemeToggle"
 
 export function DashboardHeader() {
   const searchParams = useSearchParams()
@@ -45,7 +45,7 @@ export function DashboardHeader() {
           <PlusCircle className="h-4 w-4" />
           Upload
         </Button>
-        <ThemeToggle />
+        <Themetoggle />
         <Button variant="ghost" size="icon" className="relative text-neutral-500">
           <Bell className="h-5 w-5" />
           <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-neutral-900" />

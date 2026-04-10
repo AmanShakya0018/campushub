@@ -29,4 +29,4 @@ const UserAvatar = ({ user, ...props }: Props) => {
   );
 };
 
-export default UserAvatar;
+export { UserAvatar };
