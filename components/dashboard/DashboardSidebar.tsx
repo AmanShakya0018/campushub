@@ -39,8 +39,8 @@ export function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-neutral-200 dark:border-neutral-800">
       <SidebarHeader className="h-16 flex items-center px-4">
-        <Link href="/" className="flex items-center gap-3 font-bold text-xl uppercase tracking-wider text-indigo-600">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
+        <Link href="/" className="flex items-center gap-3 font-bold text-xl uppercase tracking-wider text-neutral-900 dark:text-neutral-100">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-950 text-white dark:bg-white dark:text-black">
             <LayoutDashboard className="h-5 w-5" />
           </div>
           <span className="group-data-[collapsible=icon]:hidden">CampusHub</span>
@@ -108,7 +108,7 @@ export function DashboardSidebar() {
                 <SidebarMenuItem key={id}>
                   <SidebarMenuButton asChild tooltip={id.toUpperCase()}>
                     <Link href={`/dashboard?subject=${id}`}>
-                      <div className="h-2 w-2 rounded-full bg-indigo-500" />
+                      <div className="h-2 w-2 rounded-full bg-neutral-400" />
                       <span className="uppercase">{id}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -130,18 +130,19 @@ export function DashboardSidebar() {
           </div>
         )}
         <div className="flex flex-col gap-1">
-          <SidebarMenuButton 
-            className="text-neutral-500 hover:text-red-500" 
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="justify-start gap-3 w-full text-neutral-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20" 
             onClick={() => signOut()}
-            tooltip="Sign Out"
           >
-            <LogOut />
-            <span>Sign Out</span>
-          </SidebarMenuButton>
-          <SidebarMenuButton className="text-neutral-500" tooltip="Settings">
-            <Settings />
-            <span>Settings</span>
-          </SidebarMenuButton>
+            <LogOut className="h-4 w-4" />
+            <span className="group-data-[collapsible=icon]:hidden text-xs">Sign Out</span>
+          </Button>
+          <Button variant="ghost" size="sm" className="justify-start gap-3 w-full text-neutral-500">
+            <Settings className="h-4 w-4" />
+            <span className="group-data-[collapsible=icon]:hidden text-xs">Settings</span>
+          </Button>
         </div>
       </SidebarFooter>
     </Sidebar>

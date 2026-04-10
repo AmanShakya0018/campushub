@@ -29,12 +29,12 @@ export function SubjectCard({ subject, index, isBookmarked, onToggleBookmark, on
     >
       <Card 
         onClick={() => onClick(subject.id)}
-        className="group relative cursor-pointer overflow-hidden border-2 border-transparent bg-white transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl dark:bg-neutral-800"
+        className="group relative cursor-pointer overflow-hidden border-2 border-transparent bg-white transition-all duration-300 hover:border-neutral-200 hover:shadow-xl dark:bg-neutral-800 dark:hover:border-neutral-700"
       >
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className={cn(
-              "flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 transition-colors group-hover:bg-indigo-50 dark:bg-neutral-700 dark:group-hover:bg-indigo-900/30",
+              "flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 transition-colors group-hover:bg-neutral-200 dark:bg-neutral-800 dark:group-hover:bg-neutral-700",
               subject.color
             )}>
               <Icon className="h-6 w-6" />
@@ -48,7 +48,7 @@ export function SubjectCard({ subject, index, isBookmarked, onToggleBookmark, on
                 variant="ghost" 
                 className={cn(
                   "h-8 w-8 rounded-full transition-all duration-300",
-                  isBookmarked ? "text-indigo-600 opacity-100" : "opacity-0 group-hover:opacity-100 text-neutral-400"
+                  isBookmarked ? "text-neutral-900 opacity-100 dark:text-neutral-100" : "opacity-0 group-hover:opacity-100 text-neutral-400"
                 )}
                 onClick={(e) => {
                   e.stopPropagation()

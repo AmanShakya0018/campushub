@@ -41,7 +41,7 @@ export function DashboardHeader() {
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-3">
-        <Button variant="outline" size="sm" className="hidden sm:flex gap-2 border-indigo-200 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-900 dark:text-indigo-400">
+        <Button variant="outline" size="sm" className="hidden sm:flex gap-2 border-neutral-200 text-neutral-600 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-400">
           <PlusCircle className="h-4 w-4" />
           Upload
         </Button>
