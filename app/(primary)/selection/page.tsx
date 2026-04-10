@@ -34,7 +34,26 @@ export default function SelectionPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-neutral-50 to-neutral-100 px-4 py-20 dark:from-neutral-950 dark:to-neutral-900">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-12 text-center">
+        <div className="mb-12">
+          <div className="flex justify-center mb-8">
+            <div className="flex items-center gap-4 text-sm font-medium">
+              <div className={cn("flex items-center gap-2", !selectedYear ? "text-indigo-600" : "text-neutral-500")}>
+                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full text-[10px]", !selectedYear ? "bg-indigo-600 text-white" : "bg-neutral-200")}>1</span>
+                Year
+              </div>
+              <div className="h-px w-8 bg-neutral-200" />
+              <div className={cn("flex items-center gap-2", selectedYear && !selectedSem ? "text-indigo-600" : "text-neutral-500")}>
+                <span className={cn("flex h-6 w-6 items-center justify-center rounded-full text-[10px]", selectedYear && !selectedSem ? "bg-indigo-600 text-white" : "bg-neutral-200")}>2</span>
+                Semester
+              </div>
+              <div className="h-px w-8 bg-neutral-200" />
+              <div className="flex items-center gap-2 text-neutral-400">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-200 text-[10px]">3</span>
+                Subject
+              </div>
+            </div>
+          </div>
+
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
