@@ -28,31 +28,38 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <footer className="mt-auto block border-t border-neutral-200/80 px-2 py-12 sm:px-4 dark:border-neutral-900">
-      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between px-4 text-sm text-neutral-400 sm:flex-row">
-        <div className="flex flex-col gap-2">
+    <footer className="mt-auto block border-t border-neutral-100 px-2 py-20 sm:px-4 dark:border-neutral-900 bg-white dark:bg-neutral-950">
+      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between px-4 text-xs font-medium text-neutral-400 sm:flex-row">
+        <div className="flex flex-col gap-6">
           <div className="flex items-center">
-            <a href="#" className="flex items-center">
-              <MyIcon className="h-5 w-5 text-black dark:text-white" />
-              <span className="ml-2 text-lg font-medium text-black dark:text-white">
+            <a href="#" className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center bg-neutral-950 text-white dark:bg-white dark:text-black">
+                <MyIcon className="h-4 w-4" />
+              </div>
+              <span className="text-xl font-bold tracking-tighter text-black dark:text-white uppercase italic">
                 CampusHub
               </span>
             </a>
           </div>
-          <p className="text-xs text-neutral-600 md:text-[13px] dark:text-neutral-400">
-            © {new Date().getFullYear()} CampusHub. All rights reserved.
+          <p className="max-w-xs text-[10px] uppercase tracking-widest leading-loose text-neutral-500 dark:text-neutral-500">
+            Standardized academic repository for the verified distribution of study materials.
+            © {new Date().getFullYear()} CampusHub Protocol.
           </p>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 pb-8 sm:mt-0 sm:flex-row sm:gap-16">
+        <div className="mt-12 flex flex-col gap-12 sm:mt-0 sm:flex-row sm:gap-20">
           {footerLinks.map((section) => (
-            <div key={section.title} className="flex flex-col space-y-3">
-              <h4 className="mb-4 text-sm text-neutral-900 dark:text-neutral-100">
+            <div key={section.title} className="flex flex-col space-y-6">
+              <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-900 dark:text-neutral-100">
                 {section.title}
               </h4>
-              <div className="flex flex-row flex-wrap space-y-3 space-x-3 sm:flex-col">
+              <div className="flex flex-col space-y-3">
                 {section.links.map((link) => (
-                  <a key={link.text} href={link.href}>
+                  <a 
+                    key={link.text} 
+                    href={link.href}
+                    className="text-[10px] uppercase tracking-widest text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                  >
                     {link.text}
                   </a>
                 ))}

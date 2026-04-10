@@ -17,41 +17,37 @@ function FAQItem({ question, answer }: FAQItemProps) {
   return (
     <motion.div
       className={cn(
-        "group rounded-lg border border-neutral-200 dark:border-neutral-800",
-        "transition-all duration-200 ease-in-out",
-        isOpen
-          ? "bg-neutral-50 dark:bg-neutral-900"
-          : "hover:bg-neutral-50 dark:hover:bg-neutral-900"
+        "group border-b border-neutral-100 dark:border-neutral-800",
+        "transition-all duration-300 ease-in-out",
+        isOpen ? "bg-neutral-50 dark:bg-neutral-900/50" : "hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30"
       )}
     >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between gap-4 px-2 py-4"
+        className="flex w-full items-center justify-between gap-4 px-4 py-6"
       >
         <h3
           className={cn(
-            "text-left text-base font-medium transition-colors duration-200",
+            "text-left text-sm font-bold tracking-tight uppercase transition-colors duration-200",
             "text-neutral-900 dark:text-neutral-100",
-            isOpen && "text-primary"
+            isOpen && "text-black dark:text-white"
           )}
         >
           {question}
         </h3>
         <motion.div
           animate={{
-            rotate: isOpen ? 180 : 0,
-            scale: isOpen ? 1.1 : 1,
+            rotate: isOpen ? 135 : 0,
           }}
           transition={{
-            duration: 0.3,
-            ease: "easeInOut",
+            duration: 0.4,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className={cn(
-            "shrink-0 rounded-full p-0.5",
-            "transition-colors duration-200",
-            "text-neutral-500 dark:text-neutral-400",
-            isOpen && "text-primary"
+            "shrink-0 transition-colors duration-200",
+            "text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100",
+            isOpen && "text-neutral-900 dark:text-neutral-100"
           )}
         >
           <ChevronDown className="h-4 w-4" />
@@ -66,11 +62,11 @@ function FAQItem({ question, answer }: FAQItemProps) {
               opacity: 1,
               transition: {
                 height: {
-                  duration: 0.4,
-                  ease: [0.04, 0.62, 0.23, 0.98],
+                  duration: 0.5,
+                  ease: [0.16, 1, 0.3, 1],
                 },
                 opacity: {
-                  duration: 0.25,
+                  duration: 0.3,
                   delay: 0.1,
                 },
               },
@@ -80,25 +76,25 @@ function FAQItem({ question, answer }: FAQItemProps) {
               opacity: 0,
               transition: {
                 height: {
-                  duration: 0.3,
+                  duration: 0.4,
                   ease: "easeInOut",
                 },
                 opacity: {
-                  duration: 0.25,
+                  duration: 0.2,
                 },
               },
             }}
           >
-            <div className="px-2 pt-2 pb-4">
+            <div className="px-4 pb-8">
               <motion.p
-                initial={{ y: -8, opacity: 0 }}
+                initial={{ y: -4, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -8, opacity: 0 }}
+                exit={{ y: -4, opacity: 0 }}
                 transition={{
-                  duration: 0.3,
+                  duration: 0.4,
                   ease: "easeOut",
                 }}
-                className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400"
+                className="max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 font-medium"
               >
                 {answer}
               </motion.p>
@@ -113,56 +109,55 @@ function FAQItem({ question, answer }: FAQItemProps) {
 function FAQ() {
   const faqs: Omit<FAQItemProps, "index">[] = [
     {
-      question: "What is CampusHub?",
+      question: "What defines CampusHub?",
       answer:
-        "CampusHub is a collaborative notes repository where students can upload, access, and share their study materials with classmates to excel together.",
+        "CampusHub is a standardized academic repository designed for the efficient distribution and collaborative management of study materials within student communities.",
     },
     {
-      question: "How do I upload my notes?",
+      question: "How is material distributed?",
       answer:
-        "Simply create an account, click on the upload button, select your notes file, add a title and subject, and share it with the community.",
+        "Registered members can initiate uploads through our protocol-based interface, categorizing materials by subject and academic period for community accessibility.",
     },
     {
-      question: "Is it free to use?",
+      question: "What are the access requirements?",
       answer:
-        "Yes! CampusHub is completely free for all students. You can upload and download notes without any cost.",
+        "Access to the repository is free for all verified students. We maintain a strictly open-source philosophy for academic knowledge.",
     },
     {
-      question: "What file formats are supported?",
+      question: "Which formats are supported?",
       answer:
-        "We support PDF, DOCX, TXT, and images (JPG, PNG). You can upload your handwritten notes as images or typed documents.",
+        "The protocol supports standard document formats including PDF, DOCX, and high-fidelity image captures for handwritten documentation.",
     },
     {
-      question: "Can I search for specific subjects?",
+      question: "Is there a search function?",
       answer:
-        "Yes! You can search by subject, course, topic, or keywords to find exactly the notes you need for your studies.",
-    },
-    {
-      question: "How do ratings and reviews work?",
-      answer:
-        "After downloading notes, you can rate them and leave a review to help other students find the best quality study materials.",
+        "Yes, our search engine utilizes tag-based and metadata filtering to ensure rapid retrieval of specific academic modules.",
     },
   ]
 
   return (
-    <section className="w-full py-24 dark:bg-transparent">
+    <section className="w-full py-32 bg-neutral-50/30 dark:bg-transparent border-y border-neutral-100 dark:border-neutral-900">
       <motion.div
-        initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1 }}
         className="container mx-auto px-4"
       >
-        <motion.div className="mx-auto mb-12 max-w-7xl text-center">
-          <h2 className="test-primary mx-auto mt-6 mb-2 max-w-3xl py-2 text-center text-4xl leading-[1.1] font-medium tracking-tighter text-balance md:text-5xl">
-            Let&apos;s Answer Your Questions
+        <motion.div className="mx-auto mb-20 max-w-4xl">
+          <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400">
+            <span className="h-px w-8 bg-neutral-200" />
+            Information Protocol
+          </div>
+          <h2 className="text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl dark:text-neutral-50 uppercase">
+            Frequently Asked Questions
           </h2>
-          <p className="test-primary mb-8 text-[0.8rem] text-balance text-muted-foreground sm:text-[0.87rem] lg:text-[1rem]">
-            Everything you need to know about our platform
+          <p className="mt-6 text-neutral-500 dark:text-neutral-400 font-medium">
+            Core documentation and procedural answers for the CampusHub platform.
           </p>
         </motion.div>
 
-        <div className="mx-auto max-w-2xl space-y-2">
+        <div className="mx-auto max-w-4xl">
           {faqs.map((faq, index) => (
             <FAQItem key={index} {...faq} index={index} />
           ))}

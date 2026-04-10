@@ -52,40 +52,46 @@ const features = [
 
 const FeatureSection = () => {
   return (
-    <section className="w-full py-20">
+    <section className="w-full py-32 bg-white dark:bg-neutral-950">
       <div className="container mx-auto px-4">
-        <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-            Features
+        <div className="mb-20 text-center">
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-neutral-400">
+            <span className="h-px w-8 bg-neutral-200" />
+            Core Architecture
+            <span className="h-px w-8 bg-neutral-200" />
+          </div>
+          <h2 className="text-4xl font-bold tracking-tight text-neutral-900 sm:text-5xl dark:text-neutral-50 uppercase">
+            Protocol Features
           </h2>
-          <p className="mt-4 text-neutral-600 dark:text-neutral-400">
-            Everything you need to share and access study materials
+          <p className="mt-6 text-neutral-500 dark:text-neutral-400 max-w-2xl mx-auto font-medium">
+            Standardized modules for academic knowledge distribution and peer-to-peer collaboration.
           </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <Card
+            <motion.div
               key={index}
-              className={cn(
-                "border-neutral-200 transition-all duration-300",
-                "hover:-translate-y-1 hover:shadow-lg",
-                "dark:border-neutral-800 dark:hover:border-neutral-700"
-              )}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
             >
-              <CardHeader>
-                <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <feature.icon className="h-6 w-6" />
-                </div>
-                <CardTitle className="text-xl text-primary">
-                  {feature.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  {feature.description}
-                </p>
-              </CardContent>
-            </Card>
+              <Card className="group relative overflow-hidden border-2 border-neutral-100 bg-white dark:bg-neutral-900 dark:border-neutral-800 rounded-none transition-all duration-300 hover:border-neutral-900 dark:hover:border-neutral-100">
+                <CardHeader>
+                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-none bg-neutral-50 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100 transition-colors group-hover:bg-neutral-900 group-hover:text-white dark:group-hover:bg-neutral-100 dark:group-hover:text-black">
+                    <feature.icon className="h-7 w-7" />
+                  </div>
+                  <CardTitle className="text-lg font-bold tracking-tight uppercase">
+                    {feature.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 font-medium">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>

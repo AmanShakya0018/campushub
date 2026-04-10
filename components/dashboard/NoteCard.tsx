@@ -33,21 +33,21 @@ export function NoteCard({ note, index }: NoteCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
     >
-      <Card className="group overflow-hidden border-neutral-100 hover:border-indigo-500/30 hover:shadow-lg transition-all dark:border-neutral-800">
+      <Card className="group overflow-hidden border-neutral-200 hover:border-neutral-900 transition-all dark:border-neutral-800 dark:hover:border-neutral-100 border-2">
         <CardContent className="p-0">
           <div className="relative aspect-[4/3] bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
-            <FileText className="h-16 w-16 text-neutral-300 transition-transform group-hover:scale-110" />
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-              <Button size="sm" className="bg-white text-black hover:bg-neutral-100">
-                <Eye className="h-4 w-4 mr-2" />
-                View
+            <FileText className="h-16 w-16 text-neutral-300 transition-transform group-hover:scale-105" />
+            <div className="absolute inset-0 bg-neutral-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <Button size="sm" className="bg-white text-black hover:bg-neutral-200 rounded-none text-[10px] font-bold uppercase tracking-wider">
+                <Eye className="h-3 w-3 mr-2" />
+                Preview
               </Button>
-              <Button size="sm" variant="secondary">
-                <Download className="h-4 w-4" />
+              <Button size="sm" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black rounded-none">
+                <Download className="h-3 w-3" />
               </Button>
             </div>
             <div className="absolute top-3 left-3">
-              <Badge className="bg-white/90 text-black border-none hover:bg-white/90 backdrop-blur-sm">
+              <Badge className="bg-neutral-900 text-white border-none hover:bg-neutral-950 text-[9px] font-bold uppercase tracking-tight rounded-none dark:bg-neutral-100 dark:text-black">
                 {note.type.toUpperCase()}
               </Badge>
             </div>
