@@ -60,24 +60,49 @@ export function SubjectCard({ subject, index, isBookmarked, onToggleBookmark, on
             </div>
           </div>
 
-          <div className="mt-6">
-            <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-50 line-clamp-1">
-              {subject.name}
+          <div className="mt-5">
+            <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-50 line-clamp-1 group-hover:text-black dark:group-hover:text-white transition-colors">
+              {subject.name.toUpperCase()}
             </h3>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <p className="mt-2 text-[10px] font-medium leading-relaxed text-neutral-500 dark:text-neutral-400 line-clamp-2">
+              {subject.description}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-1.5">
               {subject.tags.map(tag => (
-                <Badge key={tag} variant="outline" className="text-[10px] font-medium bg-neutral-50/50 dark:bg-neutral-900/50">
+                <span key={tag} className="text-[9px] font-bold uppercase tracking-tight text-neutral-400 border border-neutral-100 px-1.5 py-0.5 dark:border-neutral-800">
                   {tag}
-                </Badge>
+                </span>
               ))}
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-between pt-4 border-t border-neutral-100 dark:border-neutral-700">
-            <span className="text-xs font-medium text-neutral-500">View Module</span>
-            <div className="flex items-center text-xs font-bold text-indigo-600 transition-transform group-hover:translate-x-1 dark:text-indigo-400">
-              Notes
-              <ArrowRight className="ml-1 h-3 w-3" />
+          <div className="mt-6 flex flex-col gap-4 pt-4 border-t border-neutral-100 dark:border-neutral-700">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-1">
+                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-400">Difficulty</span>
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <div 
+                      key={level} 
+                      className={cn(
+                        "h-1 w-4 rounded-full transition-colors",
+                        level <= subject.difficulty 
+                          ? "bg-neutral-900 dark:bg-neutral-100" 
+                          : "bg-neutral-100 dark:bg-neutral-800"
+                      )} 
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-neutral-400 block mb-0.5">Volume</span>
+                <span className="text-[10px] font-bold text-neutral-900 dark:text-neutral-100">{subject.credits} CR</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors">
+              <span>View Access Protocol</span>
+              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
         </CardContent>
