@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
+import { SelectionGuide } from "@/components/selection/SelectionGuide"
+
 const years = [
   { id: 1, label: "1st Year", description: "Freshman Year" },
   { id: 2, label: "2nd Year", description: "Sophomore Year" },
@@ -187,6 +189,8 @@ export default function SelectionPage() {
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
+
+          <SelectionGuide />
         </div>
     </div>
   )
