@@ -5,6 +5,7 @@ import { File, Trash, Upload, Loader2 } from "lucide-react"
 import { useDropzone } from "react-dropzone"
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { useQueryClient } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -32,6 +33,7 @@ interface UploadModalProps {
   defaultSubjectId?: string
   defaultYear?: string
   defaultSemester?: string
+  onUploadSuccess?: () => void
 }
 
 const years = [
@@ -57,6 +59,7 @@ export function UploadModal({
   defaultSubjectId = "",
   defaultYear = "1",
   defaultSemester = "odd",
+  onUploadSuccess,
 }: UploadModalProps) {
   const [files, setFiles] = React.useState<File[]>([])
   const [title, setTitle] = React.useState("")
@@ -70,6 +73,7 @@ export function UploadModal({
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const availableSubjects = React.useMemo(() => {
     return subjectsData[selectedYear]?.[selectedSemester] || []
@@ -140,10 +144,11 @@ export function UploadModal({
           }),
         })
 
+        queryClient.invalidateQueries({ queryKey: ["notes"] })
+
         setOpen(false)
         setFiles([])
         setTitle("")
-        router.refresh()
       }
     } catch (error) {
       console.error("Upload error:", error)

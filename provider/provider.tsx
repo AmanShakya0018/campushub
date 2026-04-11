@@ -2,27 +2,37 @@
 import React, { ReactNode } from "react"
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from "./theme-provider"
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 type Props = {
   children: ReactNode
 }
 
 const Provider = ({ children }: Props) => {
-  //   const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  )
 
   return (
     <SessionProvider>
-      {/* <QueryClientProvider client={queryClient}> */}
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
-      {/* </QueryClientProvider> */}
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </QueryClientProvider>
     </SessionProvider>
   )
 }

@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { motion } from "motion/react"
 import { Upload } from "lucide-react"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import SignInButton from "@/components/user/SignInButton"
@@ -12,20 +13,29 @@ import SignInButton from "@/components/user/SignInButton"
 import { SubjectFeed } from "@/components/dashboard/SubjectFeed"
 import { UploadModal } from "@/components/dashboard/UploadModal"
 import { getSubjectNameById } from "@/lib/constants/subjects"
+import {
+  fetchNotes,
+  createNote,
+  NoteData,
+  CreateNoteInput,
+} from "@/lib/api/notes"
 
-interface NoteData {
-  id: string
-  title: string
-  fileUrl: string
-  subject: string
-  year: number
-  semester: string
-  category: string
-  createdAt: string
-  user: {
-    name: string | null
-    image: string | null
-  }
+function useNotes(subject?: string, year?: string, semester?: string) {
+  return useQuery({
+    queryKey: ["notes", subject, year, semester],
+    queryFn: () => fetchNotes(subject, year, semester),
+  })
+}
+
+function useCreateNote() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: CreateNoteInput) => createNote(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] })
+    },
+  })
 }
 
 export default function DashboardPage() {
@@ -35,26 +45,12 @@ export default function DashboardPage() {
   const year = searchParams.get("year")
   const semester = searchParams.get("sem")
 
-  const [notes, setNotes] = React.useState<NoteData[]>([])
-  const [loading, setLoading] = React.useState(false)
-
-  React.useEffect(() => {
-    if (subjectId) {
-      setLoading(true)
-      const queryParams = new URLSearchParams()
-      queryParams.append("subject", subjectId.toUpperCase())
-      if (year) queryParams.append("year", year)
-      if (semester) queryParams.append("semester", semester)
-
-      fetch(`/api/notes?${queryParams.toString()}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setNotes(data)
-          setLoading(false)
-        })
-        .catch(() => setLoading(false))
-    }
-  }, [subjectId, year, semester])
+  const { data: notes = [], isLoading } = useNotes(
+    subjectId || undefined,
+    year || undefined,
+    semester || undefined
+  )
+  const createNoteMutation = useCreateNote()
 
   if (!session?.user) {
     return (
@@ -98,6 +94,7 @@ export default function DashboardPage() {
             defaultSubjectId={subjectId}
             defaultYear={year || "1"}
             defaultSemester={semester || "odd"}
+            onUploadSuccess={() => {}}
           >
             <Button className="bg-indigo-600 hover:bg-indigo-700">
               <Upload className="mr-2 h-4 w-4" />
@@ -106,7 +103,11 @@ export default function DashboardPage() {
           </UploadModal>
         </div>
 
-        <SubjectFeed subjectId={subjectId} notes={formattedNotes} />
+        <SubjectFeed
+          subjectId={subjectId}
+          notes={formattedNotes}
+          loading={isLoading}
+        />
       </div>
     )
   }
