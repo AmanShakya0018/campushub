@@ -1,4 +1,17 @@
-import { Book, Cpu, Code, Database, Network, Brain, Shield, Layers } from "lucide-react"
+import {
+  Book,
+  Cpu,
+  Code,
+  Database,
+  Network,
+  Brain,
+  Shield,
+  Layers,
+  GitBranch,
+  Laptop,
+  FileText,
+  Sparkles,
+} from "lucide-react"
 
 export interface Subject {
   id: string
@@ -15,367 +28,371 @@ export interface Subject {
 export const subjectsData: Record<string, Record<string, Subject[]>> = {
   "1": {
     odd: [
-      { 
-        id: "math1", 
-        name: "Mathematics - I", 
-        icon: Brain, 
-        color: "text-neutral-600", 
-        tags: ["Calculus", "Matrices"], 
+      {
+        id: "math1",
+        name: "Mathematics - I",
+        icon: Brain,
+        color: "text-blue-600",
+        tags: ["Calculus", "Matrices", "Engineering Maths"],
         type: "Core",
-        description: "Fundamental calculus, differential equations and linear algebra for engineering applications.",
+        description:
+          "Calculus, differential equations and linear algebra for engineering applications.",
         credits: 4,
-        difficulty: 4
+        difficulty: 4,
       },
-      { 
-        id: "phy", 
-        name: "Engineering Physics", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["Optics", "Quantum"], 
+      {
+        id: "chem",
+        name: "Engineering Chemistry",
+        icon: Book,
+        color: "text-green-600",
+        tags: ["Polymers", "Fuels", "Water Chemistry"],
         type: "Core",
-        description: "Introduction to wave optics, quantum mechanics, and solid-state physics.",
+        description:
+          "Water chemistry, green chemistry, and polymer science applications.",
         credits: 4,
-        difficulty: 3
+        difficulty: 2,
       },
-      { 
-        id: "pps", 
-        name: "Programming for Problem Solving", 
-        icon: Code, 
-        color: "text-neutral-600", 
-        tags: ["C Programming", "Logic"], 
+      {
+        id: "eea",
+        name: "Electronic Engineering",
+        icon: Cpu,
+        color: "text-purple-600",
+        tags: ["Electronics", "Diodes", "Transistors"],
         type: "Core",
-        description: "Basic programming concepts using C language, focused on logic building and algorithm design.",
+        description:
+          "Introduction to electronic devices, circuits and basic digital electronics.",
         credits: 3,
-        difficulty: 3
-      },
-      { 
-        id: "ee", 
-        name: "Basic Electrical Engineering", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["Circuits", "Transformers"], 
-        type: "Core",
-        description: "DC circuits, AC fundamentals, and magnetic circuit principles.",
-        credits: 3,
-        difficulty: 2
+        difficulty: 3,
       },
     ],
     even: [
-      { 
-        id: "math2", 
-        name: "Mathematics - II", 
-        icon: Brain, 
-        color: "text-neutral-600", 
-        tags: ["ODEs", "Complex Var"], 
+      {
+        id: "phy",
+        name: "Engineering Physics",
+        icon: Sparkles,
+        color: "text-indigo-600",
+        tags: ["Optics", "Quantum", "Modern Physics"],
         type: "Core",
-        description: "Multivariate calculus, vector calculus and complex variables.",
+        description: "Wave optics, quantum mechanics, and solid-state physics.",
         credits: 4,
-        difficulty: 5
+        difficulty: 3,
       },
-      { 
-        id: "chem", 
-        name: "Engineering Chemistry", 
-        icon: Database, 
-        color: "text-neutral-600", 
-        tags: ["Polymers", "Fuels"], 
+      {
+        id: "ee",
+        name: "Electrical Engineering",
+        icon: Cpu,
+        color: "text-yellow-600",
+        tags: ["Circuits", "Transformers", "Motors"],
         type: "Core",
-        description: "Water chemistry, green chemistry, and polymer science applications.",
+        description:
+          "DC/AC circuits, magnetic circuits, and electrical machines.",
+        credits: 3,
+        difficulty: 3,
+      },
+      {
+        id: "math2",
+        name: "Mathematics - II",
+        icon: Brain,
+        color: "text-blue-600",
+        tags: ["ODEs", "Complex Variables", "Laplace"],
+        type: "Core",
+        description:
+          "Ordinary differential equations, complex variables and Laplace transforms.",
         credits: 4,
-        difficulty: 2
+        difficulty: 5,
       },
-      { 
-        id: "english", 
-        name: "English for Communication", 
-        icon: Book, 
-        color: "text-neutral-600", 
-        tags: ["Soft Skills", "Grammar"], 
+      {
+        id: "mech",
+        name: "Mechanical Engineering",
+        icon: Layers,
+        color: "text-orange-600",
+        tags: ["Thermodynamics", "Mechanics", "Machines"],
         type: "Core",
-        description: "Enhancing verbal and written communication skills for professional environments.",
-        credits: 2,
-        difficulty: 1
-      },
-      { 
-        id: "mfg", 
-        name: "Manufacturing Practices", 
-        icon: Layers, 
-        color: "text-neutral-600", 
-        tags: ["Workshop", "Tools"], 
-        type: "Lab",
-        description: "Hands-on experience with machining, welding, and traditional manufacturing tools.",
-        credits: 2,
-        difficulty: 2
+        description:
+          "Basic thermodynamics, engineering mechanics and machine fundamentals.",
+        credits: 3,
+        difficulty: 3,
       },
     ],
   },
   "2": {
     odd: [
-      { 
-        id: "dsa", 
-        name: "Data Structures & Algorithms", 
-        icon: Code, 
-        color: "text-neutral-600", 
-        tags: ["DSA", "Trees", "Graphs"], 
+      {
+        id: "math3",
+        name: "Mathematics - III",
+        icon: Brain,
+        color: "text-blue-600",
+        tags: ["Fourier", "PDE", "Probability"],
         type: "Core",
-        description: "Advanced study of linear and non-linear data structures and their algorithmic complexity.",
+        description:
+          "Fourier series, partial differential equations and probability theory.",
         credits: 4,
-        difficulty: 5
+        difficulty: 5,
       },
-      { 
-        id: "coa", 
-        name: "Computer Organization", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["COA", "Architecture", "CPU"], 
+      {
+        id: "coa",
+        name: "Computer Organisation",
+        icon: Cpu,
+        color: "text-purple-600",
+        tags: ["Architecture", "CPU", "Memory"],
         type: "Core",
-        description: "Understand the inner workings of computer hardware and CPU design architecture.",
+        description:
+          "Computer architecture, CPU design, memory organization and I/O systems.",
         credits: 3,
-        difficulty: 4
+        difficulty: 4,
       },
-      { 
-        id: "dm", 
-        name: "Discrete Mathematics", 
-        icon: Brain, 
-        color: "text-neutral-600", 
-        tags: ["DM", "Set Theory", "Logic"], 
+      {
+        id: "dbms",
+        name: "Database Management Systems",
+        icon: Database,
+        color: "text-green-600",
+        tags: ["SQL", "Normalization", "Transactions"],
         type: "Core",
-        description: "Mathematical structures that are fundamentally discrete rather than continuous.",
-        credits: 4,
-        difficulty: 4
+        description:
+          "Relational database design, SQL, normalization and transaction management.",
+        credits: 3,
+        difficulty: 3,
       },
-      { 
-        id: "de", 
-        name: "Digital Electronics", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["DE", "Gates", "K-Maps"], 
-        type: "Lab",
-        description: "Practical application of logic gates, flip-flops, and sequential circuit design.",
-        credits: 2,
-        difficulty: 3
+      {
+        id: "cn",
+        name: "Computer Networks",
+        icon: Network,
+        color: "text-blue-500",
+        tags: ["TCP/IP", "OSI", "Protocols"],
+        type: "Core",
+        description:
+          "Data communication, OSI model, TCP/IP protocols and network security.",
+        credits: 3,
+        difficulty: 3,
       },
     ],
     even: [
-      { 
-        id: "os", 
-        name: "Operating Systems", 
-        icon: Layers, 
-        color: "text-neutral-600", 
-        tags: ["OS", "Scheduling", "Memory"], 
+      {
+        id: "mp",
+        name: "Microprocessor",
+        icon: Cpu,
+        color: "text-purple-600",
+        tags: ["8085", "Assembly", "Interfacing"],
         type: "Core",
-        description: "Core concepts of process management, memory allocation, and file systems.",
+        description:
+          "Microprocessor architecture, assembly programming and hardware interfacing.",
         credits: 3,
-        difficulty: 4
+        difficulty: 4,
       },
-      { 
-        id: "dbms", 
-        name: "Database Management Systems", 
-        icon: Database, 
-        color: "text-neutral-600", 
-        tags: ["DBMS", "SQL", "Normalization"], 
+      {
+        id: "ps",
+        name: "Probability & Statistics",
+        icon: Brain,
+        color: "text-blue-600",
+        tags: ["Probability", "Statistics", "Random Variables"],
         type: "Core",
-        description: "Relational database design, SQL querying, and high-level transaction management.",
+        description:
+          "Probability theory, random variables and statistical inference.",
         credits: 3,
-        difficulty: 3
+        difficulty: 4,
       },
-      { 
-        id: "se", 
-        name: "Software Engineering", 
-        icon: Book, 
-        color: "text-neutral-600", 
-        tags: ["SE", "SDLC", "Testing"], 
+      {
+        id: "os",
+        name: "Operating Systems",
+        icon: Layers,
+        color: "text-orange-600",
+        tags: ["Processes", "Scheduling", "Memory"],
         type: "Core",
-        description: "Methodologies for systematic software development and project lifecycle management.",
+        description:
+          "Process management, CPU scheduling, memory allocation and file systems.",
         credits: 3,
-        difficulty: 2
+        difficulty: 4,
       },
-      { 
-        id: "python", 
-        name: "Python Programming", 
-        icon: Code, 
-        color: "text-neutral-600", 
-        tags: ["Python", "Scripting", "Data Sci"], 
-        type: "Lab",
-        description: "Rapid application development and scripting using the Python ecosystem.",
-        credits: 2,
-        difficulty: 2
+      {
+        id: "dsa",
+        name: "Data Structures & Algorithms",
+        icon: Code,
+        color: "text-red-600",
+        tags: ["Trees", "Graphs", "Complexity"],
+        type: "Core",
+        description:
+          "Linear and non-linear data structures, algorithms and complexity analysis.",
+        credits: 4,
+        difficulty: 5,
       },
     ],
   },
   "3": {
     odd: [
-      { 
-        id: "ai", 
-        name: "Artificial Intelligence", 
-        icon: Brain, 
-        color: "text-neutral-600", 
-        tags: ["AI", "ML", "Search"], 
-        type: "Elective",
-        description: "Study of agents, heuristic search, and knowledge representation in machines.",
-        credits: 3,
-        difficulty: 4
-      },
-      { 
-        id: "cn", 
-        name: "Computer Networks", 
-        icon: Network, 
-        color: "text-neutral-600", 
-        tags: ["CN", "TCP/IP", "Security"], 
+      {
+        id: "daa",
+        name: "Design & Analysis of Algorithms",
+        icon: Code,
+        color: "text-red-600",
+        tags: ["Dynamic Programming", "Greedy", "Graph Algorithms"],
         type: "Core",
-        description: "Principles of data communication and the various layers of the OSI model.",
-        credits: 3,
-        difficulty: 3
-      },
-      { 
-        id: "toc", 
-        name: "Theory of Computation", 
-        icon: Brain, 
-        color: "text-neutral-600", 
-        tags: ["TOC", "Automata", "Grammar"], 
-        type: "Core",
-        description: "Mathematical models of computation, including finite automata and Turing machines.",
+        description:
+          "Advanced algorithm design techniques and rigorous complexity analysis.",
         credits: 4,
-        difficulty: 5
+        difficulty: 5,
       },
-      { 
-        id: "da", 
-        name: "Design & Analysis of Algorithms", 
-        icon: Code, 
-        color: "text-neutral-600", 
-        tags: ["DAA", "Dynamic Prog", "Greedy"], 
+      {
+        id: "agile",
+        name: "Agile Methodologies",
+        icon: GitBranch,
+        color: "text-green-600",
+        tags: ["Scrum", "Kanban", "Sprint"],
         type: "Core",
-        description: "Advanced algorithmic techniques and rigorous complexity analysis methods.",
-        credits: 4,
-        difficulty: 5
+        description:
+          "Agile development practices, Scrum framework and iterative development.",
+        credits: 3,
+        difficulty: 2,
+      },
+      {
+        id: "cp",
+        name: "Competitive Programming",
+        icon: Code,
+        color: "text-yellow-600",
+        tags: ["DSA", "Contests", "Problem Solving"],
+        type: "Core",
+        description:
+          "Algorithm optimization, competitive coding techniques and problem solving.",
+        credits: 3,
+        difficulty: 5,
+      },
+      {
+        id: "fsd",
+        name: "Fullstack Web Development",
+        icon: Laptop,
+        color: "text-blue-600",
+        tags: ["React", "Node", "Database"],
+        type: "Lab",
+        description:
+          "Frontend and backend development using modern web technologies.",
+        credits: 3,
+        difficulty: 3,
       },
     ],
     even: [
-      { 
-        id: "cd", 
-        name: "Compiler Design", 
-        icon: Code, 
-        color: "text-neutral-600", 
-        tags: ["CD", "Parsing", "Optimization"], 
+      {
+        id: "toa",
+        name: "Theory of Automata",
+        icon: Brain,
+        color: "text-purple-600",
+        tags: ["Automata", "Regular Expressions", "Turing Machine"],
         type: "Core",
-        description: "Techniques for translating high-level code into machine-executable instructions.",
+        description:
+          "Finite automata, regular languages, context-free grammars and Turing machines.",
         credits: 4,
-        difficulty: 5
+        difficulty: 5,
       },
-      { 
-        id: "wt", 
-        name: "Web Technologies", 
-        icon: Network, 
-        color: "text-neutral-600", 
-        tags: ["WT", "React", "Backend"], 
-        type: "Lab",
-        description: "Full-stack development using modern web frameworks and backend architectures.",
-        credits: 3,
-        difficulty: 3
-      },
-      { 
-        id: "is", 
-        name: "Information Security", 
-        icon: Shield, 
-        color: "text-neutral-600", 
-        tags: ["IS", "Crypto", "Network Sec"], 
+      {
+        id: "dip",
+        name: "Digital Image Processing",
+        icon: FileText,
+        color: "text-indigo-600",
+        tags: ["Image Enhancement", "Segmentation", "Compression"],
         type: "Elective",
-        description: "Cryptography, network protocols, and the legal aspects of data security.",
+        description:
+          "Image acquisition, enhancement, filtering and compression techniques.",
         credits: 3,
-        difficulty: 4
+        difficulty: 4,
       },
-      { 
-        id: "cc", 
-        name: "Cloud Computing", 
-        icon: Layers, 
-        color: "text-neutral-600", 
-        tags: ["CC", "AWS", "Azure"], 
+      {
+        id: "bd",
+        name: "Big Data",
+        icon: Database,
+        color: "text-green-600",
+        tags: ["Hadoop", "Spark", "Data Processing"],
         type: "Elective",
-        description: "Distributed computing models and virtualization in enterprise environments.",
+        description:
+          "Distributed data processing using Hadoop, Spark and related technologies.",
         credits: 3,
-        difficulty: 3
+        difficulty: 4,
+      },
+      {
+        id: "quants",
+        name: "Quantitative Aptitude",
+        icon: Brain,
+        color: "text-orange-600",
+        tags: ["Aptitude", "Logical Reasoning", "Quantitative"],
+        type: "Elective",
+        description:
+          "Problem solving, numerical ability and logical reasoning skills.",
+        credits: 2,
+        difficulty: 2,
       },
     ],
   },
   "4": {
     odd: [
-      { 
-        id: "bd", 
-        name: "Big Data Analytics", 
-        icon: Database, 
-        color: "text-neutral-600", 
-        tags: ["BD", "Hadoop", "Spark"], 
+      {
+        id: "ml",
+        name: "Machine Learning",
+        icon: Brain,
+        color: "text-purple-600",
+        tags: ["ML", "Neural Networks", "AI"],
         type: "Elective",
-        description: "Processing and analyzing massive datasets using distributed frameworks like Hadoop.",
+        description:
+          "Supervised and unsupervised learning, neural networks and ML algorithms.",
         credits: 3,
-        difficulty: 4
+        difficulty: 4,
       },
-      { 
-        id: "cy", 
-        name: "Cyber Security & Laws", 
-        icon: Shield, 
-        color: "text-neutral-600", 
-        tags: ["Cyber", "Ethical Hacking", "Forensics"], 
-        type: "Core",
-        description: "Protecting systems from digital attacks and understanding global cyber laws.",
+      {
+        id: "cloud",
+        name: "Cloud Computing",
+        icon: Network,
+        color: "text-blue-600",
+        tags: ["AWS", "Azure", "Virtualization"],
+        type: "Elective",
+        description:
+          "Cloud architecture, virtualization and distributed computing.",
         credits: 3,
-        difficulty: 3
-      },
-      { 
-        id: "ds", 
-        name: "Distributed Systems", 
-        icon: Network, 
-        color: "text-neutral-600", 
-        tags: ["DS", "RPC", "Consensus"], 
-        type: "Core",
-        description: "Architecting software systems that run across multiple independent nodes.",
-        credits: 3,
-        difficulty: 4
-      },
-      { 
-        id: "iot", 
-        name: "Internet of Things", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["IoT", "Sensors", "Arduino"], 
-        type: "Lab",
-        description: "Connecting physical objects to the digital world using sensors and protocols.",
-        credits: 2,
-        difficulty: 3
+        difficulty: 3,
       },
     ],
     even: [
-      { 
-        id: "cap", 
-        name: "Capstone Project", 
-        icon: Book, 
-        color: "text-neutral-600", 
-        tags: ["Project", "Implementation", "Doc"], 
+      {
+        id: "project",
+        name: "Capstone Project",
+        icon: Book,
+        color: "text-green-600",
+        tags: ["Project", "Research", "Implementation"],
         type: "Core",
-        description: "A culminating academic and practical experience involving extensive project work.",
+        description:
+          "Final year major project with research and implementation components.",
         credits: 8,
-        difficulty: 5
+        difficulty: 5,
       },
-      { 
-        id: "st", 
-        name: "Software Testing", 
-        icon: Shield, 
-        color: "text-neutral-600", 
-        tags: ["QA", "Jasmine"], 
-        type: "Elective",
-        description: "Quality assurance methodologies and automated testing protocol implementation.",
-        credits: 3,
-        difficulty: 2
-      },
-      { 
-        id: "es", 
-        name: "Embedded Systems", 
-        icon: Cpu, 
-        color: "text-neutral-600", 
-        tags: ["ES", "Microcontrollers", "RTOS"], 
-        type: "Elective",
-        description: "Development of specialized computing systems within larger mechanical frameworks.",
-        credits: 3,
-        difficulty: 4
+      {
+        id: "seminar",
+        name: "Seminar & Technical Writing",
+        icon: FileText,
+        color: "text-yellow-600",
+        tags: ["Presentation", "Technical Writing"],
+        type: "Core",
+        description:
+          "Technical presentation skills and research paper writing.",
+        credits: 2,
+        difficulty: 1,
       },
     ],
   },
+}
+
+export const getAllSubjectIds = (): string[] => {
+  const ids: string[] = []
+  Object.values(subjectsData).forEach((yearData) => {
+    Object.values(yearData).forEach((subjects) => {
+      subjects.forEach((subject) => {
+        ids.push(subject.id)
+      })
+    })
+  })
+  return ids
+}
+
+export const getSubjectNameById = (id: string): string => {
+  for (const year of Object.values(subjectsData)) {
+    for (const semester of Object.values(year)) {
+      const found = semester.find((s) => s.id === id)
+      if (found) return found.name
+    }
+  }
+  return id
 }

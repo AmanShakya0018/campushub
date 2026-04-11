@@ -16,28 +16,77 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { useUploadThing } from "@/lib/uploadthing"
+import { subjectsData, getSubjectNameById } from "@/lib/constants/subjects"
 
 interface UploadModalProps {
   children: React.ReactNode
-  subjectId?: string
-  year?: string
-  semester?: string
+  defaultSubjectId?: string
+  defaultYear?: string
+  defaultSemester?: string
 }
+
+const years = [
+  { value: "1", label: "1st Year" },
+  { value: "2", label: "2nd Year" },
+  { value: "3", label: "3rd Year" },
+  { value: "4", label: "4th Year" },
+]
+
+const semesters = [
+  { value: "odd", label: "Odd Semester (Sem 1, 3, 5, 7)" },
+  { value: "even", label: "Even Semester (Sem 2, 4, 6, 8)" },
+]
+
+const categories = [
+  { value: "HANDWRITTEN", label: "Handwritten Notes" },
+  { value: "DIGITAL", label: "Digital Notes" },
+  { value: "PYQ", label: "Previous Year Questions" },
+]
 
 export function UploadModal({
   children,
-  subjectId = "",
-  year = "1",
-  semester = "odd",
+  defaultSubjectId = "",
+  defaultYear = "1",
+  defaultSemester = "odd",
 }: UploadModalProps) {
   const [files, setFiles] = React.useState<File[]>([])
   const [title, setTitle] = React.useState("")
-  const [subject, setSubject] = React.useState(subjectId)
+  const [selectedYear, setSelectedYear] = React.useState(defaultYear)
+  const [selectedSemester, setSelectedSemester] =
+    React.useState(defaultSemester)
+  const [selectedSubject, setSelectedSubject] = React.useState(defaultSubjectId)
+  const [category, setCategory] = React.useState<
+    "HANDWRITTEN" | "DIGITAL" | "PYQ"
+  >("DIGITAL")
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
   const { data: session } = useSession()
+
+  const availableSubjects = React.useMemo(() => {
+    return subjectsData[selectedYear]?.[selectedSemester] || []
+  }, [selectedYear, selectedSemester])
+
+  React.useEffect(() => {
+    if (
+      !selectedSubject ||
+      !availableSubjects.find((s) => s.id === selectedSubject)
+    ) {
+      if (availableSubjects.length > 0) {
+        setSelectedSubject(availableSubjects[0].id)
+      } else {
+        setSelectedSubject("")
+      }
+    }
+  }, [selectedYear, selectedSemester])
 
   const { startUpload, isUploading } = useUploadThing("noteUploader", {
     onClientUploadComplete: (res) => {
@@ -65,23 +114,49 @@ export function UploadModal({
   }
 
   const handleUpload = async () => {
-    if (files.length === 0 || !title || !subject) return
+    if (
+      files.length === 0 ||
+      !title ||
+      !selectedSubject ||
+      !session?.user?.email
+    )
+      return
 
-    await startUpload(files, {
-      title,
-      subject: subject.toUpperCase(),
-      year,
-      semester,
-    })
+    try {
+      const result = await startUpload(files)
+
+      if (result && result[0]) {
+        await fetch("/api/notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title,
+            fileUrl: result[0].url,
+            subject: selectedSubject,
+            year: parseInt(selectedYear),
+            semester: selectedSemester,
+            category,
+            userEmail: session.user.email,
+          }),
+        })
+
+        setOpen(false)
+        setFiles([])
+        setTitle("")
+        router.refresh()
+      }
+    } catch (error) {
+      console.error("Upload error:", error)
+    }
   }
 
   const canUpload =
-    files.length > 0 && title.trim() && subject.trim() && !isUploading
+    files.length > 0 && title.trim() && selectedSubject && !isUploading
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Upload Notes</DialogTitle>
           <DialogDescription>
@@ -100,14 +175,77 @@ export function UploadModal({
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label>Year</Label>
+              <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Select year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((year) => (
+                    <SelectItem key={year.value} value={year.value}>
+                      {year.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Semester</Label>
+              <Select
+                value={selectedSemester}
+                onValueChange={setSelectedSemester}
+              >
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Select semester" />
+                </SelectTrigger>
+                <SelectContent>
+                  {semesters.map((sem) => (
+                    <SelectItem key={sem.value} value={sem.value}>
+                      {sem.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
           <div>
             <Label>Subject</Label>
-            <Input
-              placeholder="e.g., DBMS, OS, CN"
-              className="mt-2"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
+            <Select value={selectedSubject} onValueChange={setSelectedSubject}>
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="Select subject" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableSubjects.map((subject) => (
+                  <SelectItem key={subject.id} value={subject.id}>
+                    {subject.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label>Category</Label>
+            <Select
+              value={category}
+              onValueChange={(value) =>
+                setCategory(value as "HANDWRITTEN" | "DIGITAL" | "PYQ")
+              }
+            >
+              <SelectTrigger className="mt-2">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((cat) => (
+                  <SelectItem key={cat.value} value={cat.value}>
+                    {cat.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>

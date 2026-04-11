@@ -43,9 +43,9 @@ export function DashboardHeader() {
 
       <div className="flex flex-1 items-center justify-end gap-3">
         <UploadModal
-          subjectId={subject || ""}
-          year={year || "1"}
-          semester={sem || "odd"}
+          defaultSubjectId={subject || ""}
+          defaultYear={year || "1"}
+          defaultSemester={sem || "odd"}
         >
           <Button
             variant="outline"

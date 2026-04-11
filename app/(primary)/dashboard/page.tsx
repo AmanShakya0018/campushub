@@ -10,12 +10,51 @@ import { Card, CardContent } from "@/components/ui/card"
 import SignInButton from "@/components/user/SignInButton"
 
 import { SubjectFeed } from "@/components/dashboard/SubjectFeed"
-import { mockNotes } from "@/lib/constants/mockNotes"
+import { UploadModal } from "@/components/dashboard/UploadModal"
+import { getSubjectNameById } from "@/lib/constants/subjects"
+
+interface NoteData {
+  id: string
+  title: string
+  fileUrl: string
+  subject: string
+  year: number
+  semester: string
+  category: string
+  createdAt: string
+  user: {
+    name: string | null
+    image: string | null
+  }
+}
 
 export default function DashboardPage() {
   const { data: session } = useSession()
   const searchParams = useSearchParams()
   const subjectId = searchParams.get("subject")
+  const year = searchParams.get("year")
+  const semester = searchParams.get("sem")
+
+  const [notes, setNotes] = React.useState<NoteData[]>([])
+  const [loading, setLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    if (subjectId) {
+      setLoading(true)
+      const queryParams = new URLSearchParams()
+      queryParams.append("subject", subjectId.toUpperCase())
+      if (year) queryParams.append("year", year)
+      if (semester) queryParams.append("semester", semester)
+
+      fetch(`/api/notes?${queryParams.toString()}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setNotes(data)
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
+    }
+  }, [subjectId, year, semester])
 
   if (!session?.user) {
     return (
@@ -33,21 +72,41 @@ export default function DashboardPage() {
   }
 
   if (subjectId) {
-    const notes = mockNotes[subjectId] || []
+    const subjectName = getSubjectNameById(subjectId)
+
+    const formattedNotes = notes.map((note) => ({
+      id: note.id,
+      title: note.title,
+      type: note.category.toLowerCase() as "handwritten" | "digital" | "pyq",
+      fileUrl: note.fileUrl,
+      uploader: {
+        name: note.user.name || "Anonymous",
+        image: note.user.image || undefined,
+      },
+      createdAt: note.createdAt,
+      downloads: 0,
+    }))
+
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight text-neutral-900 uppercase dark:text-neutral-50">
-            {subjectId}{" "}
+            {subjectName}{" "}
             <span className="font-normal text-neutral-400">/ Feed</span>
           </h1>
-          <Button className="bg-indigo-600 hover:bg-indigo-700">
-            <Upload className="mr-2 h-4 w-4" />
-            Upload Note
-          </Button>
+          <UploadModal
+            defaultSubjectId={subjectId}
+            defaultYear={year || "1"}
+            defaultSemester={semester || "odd"}
+          >
+            <Button className="bg-indigo-600 hover:bg-indigo-700">
+              <Upload className="mr-2 h-4 w-4" />
+              Upload Note
+            </Button>
+          </UploadModal>
         </div>
 
-        <SubjectFeed subjectId={subjectId} notes={notes} />
+        <SubjectFeed subjectId={subjectId} notes={formattedNotes} />
       </div>
     )
   }
