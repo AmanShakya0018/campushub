@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
-import { Search, Bell, Menu, PlusCircle } from "lucide-react"
+import { Search, PlusCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { SelectionBreadcrumbs } from "../selection/SelectionBreadcrumbs"
 import { useSearchParams } from "next/navigation"
 import { Themetoggle } from "@/components/ui/ThemeToggle"
+import { UploadModal } from "./UploadModal"
 
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
@@ -41,14 +42,20 @@ export function DashboardHeader() {
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-3">
-        <Button
-          variant="outline"
-          size="sm"
-          className="hidden gap-2 border-neutral-200 text-neutral-600 hover:bg-neutral-50 sm:flex dark:border-neutral-800 dark:text-neutral-400"
+        <UploadModal
+          subjectId={subject || ""}
+          year={year || "1"}
+          semester={sem || "odd"}
         >
-          <PlusCircle className="h-4 w-4" />
-          Upload
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="hidden gap-2 border-neutral-200 text-neutral-600 hover:bg-neutral-50 sm:flex dark:border-neutral-800 dark:text-neutral-400"
+          >
+            <PlusCircle className="h-4 w-4" />
+            Upload
+          </Button>
+        </UploadModal>
         <Themetoggle />
       </div>
     </header>
