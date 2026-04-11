@@ -3,10 +3,13 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, GraduationCap, BookOpen, Bookmark, LogOut, Settings } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { UserAvatar } from "@/components/user/UserAvatar"
+import {
+  LayoutDashboard,
+  GraduationCap,
+  LogOut,
+  Settings,
+  User,
+} from "lucide-react"
 import { useSession, signOut } from "next-auth/react"
 import {
   Sidebar,
@@ -19,6 +22,14 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { UserAvatar } from "@/components/user/UserAvatar"
 
 export function DashboardSidebar() {
   const pathname = usePathname()
@@ -37,13 +48,21 @@ export function DashboardSidebar() {
   }, [])
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-neutral-200 dark:border-neutral-800">
-      <SidebarHeader className="h-16 flex items-center px-4">
-        <Link href="/" className="flex items-center gap-3 font-bold text-xl uppercase tracking-wider text-neutral-900 dark:text-neutral-100">
+    <Sidebar
+      collapsible="icon"
+      className="border-r border-neutral-200 dark:border-neutral-800"
+    >
+      <SidebarHeader className="flex h-16 items-center px-4">
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-xl font-bold tracking-wider text-neutral-900 uppercase dark:text-neutral-100"
+        >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-950 text-white dark:bg-white dark:text-black">
             <LayoutDashboard className="h-5 w-5" />
           </div>
-          <span className="group-data-[collapsible=icon]:hidden">CampusHub</span>
+          <span className="group-data-[collapsible=icon]:hidden">
+            CampusHub
+          </span>
         </Link>
       </SidebarHeader>
 
@@ -52,9 +71,9 @@ export function DashboardSidebar() {
           <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton 
-                asChild 
-                isActive={pathname === "/dashboard"} 
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === "/dashboard"}
                 tooltip="Overview"
               >
                 <Link href="/dashboard">
@@ -64,36 +83,14 @@ export function DashboardSidebar() {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton 
-                asChild 
-                isActive={pathname.startsWith("/selection")} 
+              <SidebarMenuButton
+                asChild
+                isActive={pathname.startsWith("/selection")}
                 tooltip="Year Selection"
               >
                 <Link href="/selection">
                   <GraduationCap />
                   <span>Year Selection</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Library</SidebarGroupLabel>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Starred Notes">
-                <Link href="/dashboard?view=starred">
-                  <Bookmark />
-                  <span>Starred Notes</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Recent History">
-                <Link href="/dashboard?view=recents">
-                  <BookOpen />
-                  <span>Recent History</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -121,29 +118,37 @@ export function DashboardSidebar() {
 
       <SidebarFooter className="border-t border-neutral-200 p-2 dark:border-neutral-800">
         {session?.user && (
-          <div className="flex items-center gap-3 px-2 py-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
-            <UserAvatar user={session.user} className="h-8 w-8" />
-            <div className="flex-1 overflow-hidden group-data-[collapsible=icon]:hidden">
-              <p className="truncate text-xs font-semibold">{session.user.name}</p>
-              <p className="truncate text-[10px] text-neutral-500">{session.user.email}</p>
-            </div>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex w-full cursor-pointer items-center gap-3 rounded-md p-1.5 transition-colors hover:bg-sidebar-accent">
+                <UserAvatar user={session.user} className="size-8 rounded-md" />
+                <div className="flex min-w-0 flex-1 flex-col items-start group-data-[collapsible=icon]:hidden">
+                  <p className="truncate text-sm font-medium">
+                    {session.user.name}
+                  </p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {session.user.email}
+                  </p>
+                </div>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="start" side="top">
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => signOut()}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
-        <div className="flex flex-col gap-1">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="justify-start gap-3 w-full text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800" 
-            onClick={() => signOut()}
-          >
-            <LogOut className="h-4 w-4" />
-            <span className="group-data-[collapsible=icon]:hidden text-xs uppercase tracking-widest font-bold">Sign Out</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="justify-start gap-3 w-full text-neutral-500">
-            <Settings className="h-4 w-4" />
-            <span className="group-data-[collapsible=icon]:hidden text-xs">Settings</span>
-          </Button>
-        </div>
       </SidebarFooter>
     </Sidebar>
   )
