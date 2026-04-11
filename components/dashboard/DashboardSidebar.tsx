@@ -34,36 +34,18 @@ import { UserAvatar } from "@/components/user/UserAvatar"
 export function DashboardSidebar() {
   const pathname = usePathname()
   const { data: session } = useSession()
-  const [bookmarks, setBookmarks] = React.useState<string[]>([])
-
-  React.useEffect(() => {
-    const saved = localStorage.getItem("campushub_bookmarks")
-    if (saved) {
-      try {
-        setBookmarks(JSON.parse(saved))
-      } catch (e) {
-        console.error("Failed to parse bookmarks", e)
-      }
-    }
-  }, [])
 
   return (
     <Sidebar
       collapsible="icon"
       className="border-r border-neutral-200 dark:border-neutral-800"
     >
-      <SidebarHeader className="flex h-16 items-center px-4">
-        <Link
-          href="/"
-          className="flex items-center gap-3 text-xl font-bold tracking-wider text-neutral-900 uppercase dark:text-neutral-100"
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-950 text-white dark:bg-white dark:text-black">
-            <LayoutDashboard className="h-5 w-5" />
-          </div>
+      <SidebarHeader className="flex h-16 px-4">
+        <div className="flex items-center gap-3 text-xl font-bold tracking-wider text-neutral-900 uppercase dark:text-neutral-100">
           <span className="group-data-[collapsible=icon]:hidden">
             CampusHub
           </span>
-        </Link>
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -86,34 +68,16 @@ export function DashboardSidebar() {
               <SidebarMenuButton
                 asChild
                 isActive={pathname.startsWith("/selection")}
-                tooltip="Year Selection"
+                tooltip="Subjects"
               >
                 <Link href="/selection">
                   <GraduationCap />
-                  <span>Year Selection</span>
+                  <span>Subjects</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
-
-        {bookmarks.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Bookmarked</SidebarGroupLabel>
-            <SidebarMenu>
-              {bookmarks.slice(0, 5).map((id) => (
-                <SidebarMenuItem key={id}>
-                  <SidebarMenuButton asChild tooltip={id.toUpperCase()}>
-                    <Link href={`/dashboard?subject=${id}`}>
-                      <div className="h-2 w-2 rounded-full bg-neutral-400" />
-                      <span className="uppercase">{id}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroup>
-        )}
       </SidebarContent>
 
       <SidebarFooter className="border-t border-neutral-200 p-2 dark:border-neutral-800">
