@@ -2,7 +2,7 @@
 
 import React from "react"
 import { motion } from "motion/react"
-import { FileText, Download, Share2, MoreVertical, Eye } from "lucide-react"
+import { FileText, Share2, MoreVertical, Eye } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -27,27 +27,32 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note, index }: NoteCardProps) {
+  const handlePreview = () => {
+    window.open(note.fileUrl, "_blank")
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
     >
-      <Card className="group overflow-hidden border-neutral-200 hover:border-neutral-900 transition-all dark:border-neutral-800 dark:hover:border-neutral-100 border-2">
+      <Card className="group overflow-hidden border-2 border-neutral-200 transition-all hover:border-neutral-900 dark:border-neutral-800 dark:hover:border-neutral-100">
         <CardContent className="p-0">
-          <div className="relative aspect-[4/3] bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
+          <div className="relative flex aspect-4/3 items-center justify-center overflow-hidden bg-neutral-100 dark:bg-neutral-800">
             <FileText className="h-16 w-16 text-neutral-300 transition-transform group-hover:scale-105" />
-            <div className="absolute inset-0 bg-neutral-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-              <Button size="sm" className="bg-white text-black hover:bg-neutral-200 rounded-none text-[10px] font-bold uppercase tracking-wider">
-                <Eye className="h-3 w-3 mr-2" />
+            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-neutral-900/60 opacity-0 transition-opacity group-hover:opacity-100">
+              <Button
+                size="sm"
+                className="rounded-none bg-white text-[10px] font-bold tracking-wider text-black uppercase hover:bg-neutral-200"
+                onClick={handlePreview}
+              >
+                <Eye className="mr-2 h-3 w-3" />
                 Preview
-              </Button>
-              <Button size="sm" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black rounded-none">
-                <Download className="h-3 w-3" />
               </Button>
             </div>
             <div className="absolute top-3 left-3">
-              <Badge className="bg-neutral-900 text-white border-none hover:bg-neutral-950 text-[9px] font-bold uppercase tracking-tight rounded-none dark:bg-neutral-100 dark:text-black">
+              <Badge className="rounded-none border-none bg-neutral-900 text-[9px] font-bold tracking-tight text-white uppercase hover:bg-neutral-950 dark:bg-neutral-100 dark:text-black">
                 {note.type.toUpperCase()}
               </Badge>
             </div>
@@ -55,12 +60,9 @@ export function NoteCard({ note, index }: NoteCardProps) {
 
           <div className="p-4">
             <div className="flex items-start justify-between gap-2">
-              <h3 className="font-bold text-neutral-900 line-clamp-1 dark:text-neutral-100">
+              <h3 className="line-clamp-1 font-bold text-neutral-900 dark:text-neutral-100">
                 {note.title}
               </h3>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-neutral-400">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
             </div>
 
             <div className="mt-4 flex items-center justify-between">
@@ -70,18 +72,11 @@ export function NoteCard({ note, index }: NoteCardProps) {
                   <AvatarFallback>{note.uploader.name[0]}</AvatarFallback>
                 </Avatar>
                 <div className="text-[10px]">
-                  <p className="font-bold text-neutral-700 dark:text-neutral-300">{note.uploader.name}</p>
+                  <p className="font-bold text-neutral-700 dark:text-neutral-300">
+                    {note.uploader.name}
+                  </p>
                   <p className="text-neutral-400">{note.createdAt}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 text-neutral-400">
-                <div className="flex items-center gap-1 text-[10px]">
-                  <Download className="h-3 w-3" />
-                  {note.downloads}
-                </div>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <Share2 className="h-3 w-3" />
-                </Button>
               </div>
             </div>
           </div>

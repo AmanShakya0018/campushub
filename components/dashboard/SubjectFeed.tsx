@@ -13,7 +13,7 @@ interface SubjectFeedProps {
   loading?: boolean
 }
 
-export function SubjectFeed({ subjectId, notes, loading }: SubjectFeedProps) {
+export function SubjectFeed({ notes, loading }: SubjectFeedProps) {
   const [filter, setFilter] = React.useState("all")
   const [search, setSearch] = React.useState("")
 
@@ -82,11 +82,6 @@ export function SubjectFeed({ subjectId, notes, loading }: SubjectFeedProps) {
               ? `No results for "${search}" in this category.`
               : "There are no notes uploaded for this subject yet."}
           </p>
-          {!search && (
-            <Button className="mt-6 bg-indigo-600">
-              Be the first to upload
-            </Button>
-          )}
         </div>
       )}
     </div>

@@ -1,19 +1,29 @@
 "use client"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { Logo } from "@/components/ui/logo"
+import { AlertCircle } from "lucide-react"
 
 export default function SignInPage() {
   const [signinLoading, setSigninLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const error = searchParams.get("error")
+
+  useEffect(() => {
+    if (error === "AccessDenied") {
+      setSigninLoading(false)
+    }
+  }, [error])
 
   const handleSignIn = async () => {
     setSigninLoading(true)
     try {
       await signIn("google", { callbackUrl: "/dashboard" })
-    } catch (error) {
-      console.error("Failed to sign in:", error)
+    } catch (err) {
+      console.error("Failed to sign in:", err)
       setSigninLoading(false)
     }
   }
@@ -30,7 +40,17 @@ export default function SignInPage() {
               <h2 className="text-4xl font-bold tracking-tight text-primary">
                 Welcome to CampusHub
               </h2>
+              <p className="mt-2 text-sm text-neutral-500">
+                Only GLA University students allowed
+              </p>
             </div>
+
+            {error === "AccessDenied" && (
+              <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+                <AlertCircle className="h-4 w-4" />
+                Only GLA University emails (@gla.ac.in) are allowed to sign in.
+              </div>
+            )}
 
             <div className="space-y-4">
               <button

@@ -19,6 +19,14 @@ export const authOptions = {
         return false
       }
 
+      const allowedDomain = "gla.ac.in"
+      const emailDomain = params.user.email.split("@")[1]?.toLowerCase()
+
+      if (emailDomain !== allowedDomain) {
+        console.log(`Blocked login attempt from: ${params.user.email}`)
+        return "/signin?error=AccessDenied"
+      }
+
       try {
         const existingUser = await prisma.user.findUnique({
           where: {
