@@ -6,22 +6,26 @@ import Link from "next/link"
 const HeroSection = () => {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="relative mx-auto flex w-full flex-col justify-center px-3 pt-40 pb-20 md:pt-44 lg:px-5">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="mx-auto max-w-sm text-center text-4xl font-bold tracking-tighter text-balance text-neutral-950 sm:max-w-2xl sm:text-5xl lg:text-5xl xl:text-7xl dark:text-neutral-50 uppercase">
-            Curated Academic Excellence
+      <div className="relative mx-auto flex w-full flex-col justify-center px-3 pt-48 pb-28 md:pt-56 lg:px-5">
+        <div className="mx-auto max-w-4xl text-center">
+          <h1 className="mx-auto max-w-2xl text-center text-4xl font-bold tracking-tighter text-balance text-neutral-950 sm:max-w-3xl sm:text-5xl lg:text-6xl xl:text-7xl dark:text-neutral-50">
+            Your Notes, <br className="hidden sm:block" />
+            Organized Effortlessly
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed tracking-tight text-balance text-neutral-500 md:text-lg dark:text-neutral-400 font-medium">
-            The strictly monotone repository for shared knowledge.
-            Access, upload, and collaborate on world-class study materials.
+          <p className="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed font-medium tracking-tight text-balance text-neutral-500 md:text-lg dark:text-neutral-400">
+            Capture, organize, and access your study notes from anywhere. Sync
+            across all your devices and never lose important information again.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4 sm:mt-14 sm:gap-5">
             <Link href="/dashboard">
-            <Button variant="default" className="h-12 px-8 rounded-none bg-neutral-900 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-neutral-200 text-xs font-bold uppercase tracking-[0.2em] transition-all">
-              Dashboard
-            </Button>
+              <Button
+                variant="default"
+                className="h-14 bg-neutral-900 px-10 text-sm font-bold tracking-[0.2em] text-white uppercase transition-all hover:bg-black dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+              >
+                Get Started
+              </Button>
             </Link>
           </div>
         </div>
