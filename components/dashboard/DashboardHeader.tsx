@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { Suspense } from "react"
 import { Search, PlusCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -11,14 +11,14 @@ import { UploadModal } from "./UploadModal"
 
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
-export function DashboardHeader() {
+function HeaderContent() {
   const searchParams = useSearchParams()
   const subject = searchParams.get("subject")
   const year = searchParams.get("year")
   const sem = searchParams.get("sem")
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-neutral-200 bg-white/80 px-4 backdrop-blur-md md:px-8 dark:border-neutral-800 dark:bg-neutral-900/80">
+    <>
       <div className="flex flex-1 items-center gap-4">
         <SidebarTrigger className="text-neutral-500" />
 
@@ -58,6 +58,25 @@ export function DashboardHeader() {
         </UploadModal>
         <Themetoggle />
       </div>
+    </>
+  )
+}
+
+function HeaderLoading() {
+  return (
+    <div className="flex flex-1 items-center gap-4">
+      <div className="h-4 w-4 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+      <div className="h-4 w-20 animate-pulse rounded bg-neutral-200 dark:bg-neutral-800" />
+    </div>
+  )
+}
+
+export function DashboardHeader() {
+  return (
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-neutral-200 bg-white/80 px-4 backdrop-blur-md md:px-8 dark:border-neutral-800 dark:bg-neutral-900/80">
+      <Suspense fallback={<HeaderLoading />}>
+        <HeaderContent />
+      </Suspense>
     </header>
   )
 }

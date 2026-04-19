@@ -1,13 +1,13 @@
 "use client"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
 import { Logo } from "@/components/ui/logo"
 import { AlertCircle } from "lucide-react"
 
-export default function SignInPage() {
+function SignInContent() {
   const [signinLoading, setSigninLoading] = useState(false)
   const searchParams = useSearchParams()
   const error = searchParams.get("error")
@@ -109,5 +109,23 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function SignInLoading() {
+  return (
+    <div className="min-h-screen bg-white dark:bg-black">
+      <div className="flex min-h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<SignInLoading />}>
+      <SignInContent />
+    </Suspense>
   )
 }

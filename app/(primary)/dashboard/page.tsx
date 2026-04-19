@@ -1,6 +1,8 @@
 "use client"
 
-import React from "react"
+export const dynamic = "force-dynamic"
+
+import React, { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { motion } from "motion/react"
@@ -38,7 +40,7 @@ function useCreateNote() {
   })
 }
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { data: session } = useSession()
   const searchParams = useSearchParams()
   const subjectId = searchParams.get("subject")
@@ -140,5 +142,21 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+function DashboardLoading() {
+  return (
+    <div className="flex min-h-[70vh] items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent" />
+    </div>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<DashboardLoading />}>
+      <DashboardContent />
+    </Suspense>
   )
 }
