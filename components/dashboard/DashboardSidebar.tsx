@@ -3,13 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import {
-  LayoutDashboard,
-  GraduationCap,
-  LogOut,
-  Settings,
-  User,
-} from "lucide-react"
+import { LayoutDashboard, GraduationCap, LogOut } from "lucide-react"
 import { useSession, signOut } from "next-auth/react"
 import {
   Sidebar,
@@ -97,14 +91,6 @@ export function DashboardSidebar() {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start" side="top">
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => signOut()}>
                 <LogOut className="mr-2 h-4 w-4" />

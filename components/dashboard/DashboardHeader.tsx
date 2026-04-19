@@ -50,7 +50,7 @@ function HeaderContent() {
           <Button
             variant="outline"
             size="sm"
-            className="hidden gap-2 border-neutral-200 text-neutral-600 hover:bg-neutral-50 sm:flex dark:border-neutral-800 dark:text-neutral-400"
+            className="hidden gap-2 border-neutral-200 text-neutral-600 hover:bg-neutral-50 sm:flex dark:border-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
           >
             <PlusCircle className="h-4 w-4" />
             Upload
